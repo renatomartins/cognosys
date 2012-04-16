@@ -1,0 +1,18 @@
+- receive as arguments the name of the model "slugged" and a list of properties
+  example: [scriptname] user string:name string:email string:login string:password int:privileges
+
+
+- create model with proper namespace and class definition
+  example: App/Models/User.php
+
+- create a table in the database and the respective fields
+  example: create table if not exists `user`(
+               id INT(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+               name VARCHAR(255) DEFAULT NULL,
+               email VARCHAR(255) DEFAULT NULL,
+               login VARCHAR(255) DEFAULT NULL,
+               password VARCHAR(255) DEFAULT NULL,
+               privileges INT(11) DEFAULT 0
+           );
+
+- create doctrine annotations in model

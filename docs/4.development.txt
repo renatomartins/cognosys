@@ -1,0 +1,63 @@
+===========
+Development
+===========
+
+
+Required software
+-----------------
+
+Apache or Nginx web server with SSL, MySQL Server 5.x and PHP 5.3.
+
+
+Recommended software
+--------------------
+
+The Zend Server Community Edition is package already with Apache, MySQL and PHP.
+An Integrated Development Environment (IDE) is definitely encouraged, given the assistance of such a tool. Eclipse PDT is a good choice.
+A MySQL client is very handy to check the integrity of the data that is persisted into the MySQL server through Cognosys.
+Since the helper scripts are written in Python, it is recommended its installation (Python 2.7 <= x < 3) in order to execute them.
+
+
+Cognosys code
+----------------
+
+Cognosys is written in PHP and has a set of helper scripts written in Python.
+All the code can be found at the shared folder [FIXME]. Alternativelly there is a Git repository at [FIXME].
+
+
+Libraries
+---------
+
+Not all of this code was developed specifically to Cognosys. Some of it was created by other developers and under some open-source licence in order to be shared and used by anyone. Those libraries were added to Cognosys to increase the speed of the development process. They have the advantage of being well tested and avoid programmers to write code just to one task that someone already find a solution to.
+PHP libraries included:
+ - Doctrine 2.1: an ORM and DBAL, providing a powerful alternative to SQL and maintaining flexibility without requiring unnecessary code duplication. Supports various database engines through PDO abstraction. (http://www.doctrine-project.org)
+ - PHPMailer 5.0: an easy to use email transfer PHP class. (http://phpmailer.codeworxtech.com)
+ - Addendum 0.4.1: an annotation parser that extends the reflection capabilities of PHP. Renato made a patch to support namespaces. (http://code.google.com/p/addendum/)
+ - Symfony YAML: part of the Symfony project and included in Doctrine, this package offers convenient methods to load and dump YAML files. (http://components.symfony-project.org/yaml/)
+
+[FIXME] *** none yet ***
+JavaScript libraries included:
+jQuery 1.7: ...
+TinyMCE or CKEditor
+DataTables (www.datatables.net)
+Chosen (http://harvesthq.github.com/chosen/)
+Uniform (http://uniformjs.com)
+qTip2 (http://craigsworks.com/projects/qtip2)
+
+
+Cognosys overview
+----------------
+
+[FIXME]
+App
+Config
+Core
+docs
+Lib
+logs
+private
+public
+scripts
+
+ - App: all application specific files live here, under a rigid structure. In Layouts directory, there are all possible layout skeletons that the views can use. In Modules, there are the components of the whole application and each of them has 
+

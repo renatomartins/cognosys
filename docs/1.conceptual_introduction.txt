@@ -1,0 +1,88 @@
+=======================
+Conceptual introduction
+=======================
+
+
+What is a framework?
+--------------------
+
+The intent of a web application framework is to support the development of websites, web applications or web services. Common activities can be programmed with a minimum effort, reusing the same code to produce dynamic results. Therefore, the code is much more organized and easy to maintain.
+Usually, web frameworks provide features such as: database access, centralized configuration, URL mapping, security, templating systems or AJAX services.
+
+
+Influences
+----------
+
+Cognosys, as a PHP framework, is mostly inspired by other open-source frameworks, such as:
+ - Ruby on Rails (original author: David Heinemeier)
+ - Symfony (original author: Fabien Potencier)
+ - Nettesheim (original author: Samuel Gordalina)
+
+
+The MVC pattern
+---------------
+
+[Some illustrations later]
+
+Most web frameworks follow a Model-View-Controller (MVC) architectural pattern.
+This pattern is important because it allows the code to be separated by concerns. It means that different aspects of the application (the model, the view and the controller) are isolated, providing a decrease of complexity and an increase of flexibility and maintainability of the code.
+The 'model' manages the application data, which is usually stored in a database; the 'view' is the interface that renders the information and provides interaction with the user; and the 'controller' stays between the views and the models, receiving requests and generating responses to a 'view' based on information from the 'model'.
+Actually, Cognosys uses a derivative of the MVC pattern, the Model-View-Presenter, because the controller directly renders the contents of the view, thus assuming the role of a presenter.
+
+
+DRY mantra
+----------
+
+DRY means Don't Repeat Yourself, which is a very useful principle while developing a web framework. This is an attempt to keep code duplication to a minimum, avoiding redundancy. The implications of this are of great importance: code just have to be done once and reused when needed; no endless copy-paste; edit the code only in one place.
+Cognosys applies this principle to its core, allowing the code to be separated by concern and towards a "cleaner" MVC.
+
+
+Database access
+---------------
+
+The database is the repository where all data is stored. This implies that the data is managed by a database server independent from Cognosys - a database management system (DBMS). In this case, the choice was MySQL, a widely used DBMS in the open-source community.
+Cognosys uses a database abstraction layer (DBAL) so that the data can be in a wide variety of database management system (DBMS). The abstraction layer includes a system that maps the business objects (the 'models' of the MVC) to tables on the database, so that we can work in Cognosys with PHP objects and not with MySQL query results.
+
+
+Security
+--------
+
+Security is a very important issue in Cognosys, as this system may deliver sensitive data to its users. The most critical points to address are user authentication and user authorization.
+User authentication is the function of establishing a connection between the user and the current session of the application. This is accomplished by verifying if a user is who he/she claims to be, usually as a login form.
+User authorization deals with the access policy of the information. Requests to actions are granted or rejected according to access lists. Cognosys implements this function by defining in each action which groups or roles have access to it.
+Other security concerns are connection through SSL, password hashing and data encryption.
+Connection through SSL means that all data is transfered across the browser and server is encrypted - hidden from intruders sniffing the network.
+Password hashing means that users' passwords are not stored in plain text, instead they are transformed before and, only then, saved in the database. Now, every time a user logs in, the given password is also transformed and matched to the one stored in the database. This way, even if the database is compromised, the passwords are still safe.
+All other sensitive information can be encrypted with a cipher. After that information is stored, it can only be decrypted with the proper key, thus maintaining it secure. This type of ciphering is symmetric because the key to encode is the same in the decode process. Of course, if the encoding process is publicly known, there must be some secret information in the key - user related information.
+
+
+URL routing
+-----------
+
+This functionality parses the URLs and translates it according to a configuration file. The routes are composed of 3 parts: the controller name, the action name and the parameters to pass to the action. However, this behavior can be changed in the configuration file.
+Also, there could be configured custom routes to redirect requests.
+
+
+Error handling
+--------------
+
+Error handling has the purpose of avoid uncontrolled errors. Errors that are not expected can break the current execution of Cognosys and don't give any useful information to the user, leaving him/her with no option. If the errors are handled in advance, there can be given to the user a helpful message to recover from that error.
+There are 2 types of errors in Cognosys: application errors and user errors. Application errors occur because some malfunction of Cognosys and, therefore, are reported to the developers to fix the code. User errors happen due to incorrect user input and are reported in the browser to the user to fix.
+
+
+AJAX and REST web services
+---------------------------
+
+[This feature is not implemented yet]
+
+AJAX stands for Asynchronous JavaScript and XML, which is a technique used in a browser to send and receive data from a server asynchronously (without refreshing the page in the browser). The importance of this technique lies in the smaller responses from the server, with just the information requested instead of the whole page, which makes the request much faster than usual. Also, when a page has a lot of text and forms, refreshing it reduces the productivity of the user.
+Now, how does this AJAX requests are handled by the server? To answer that, let's look at REST. This acronym means Representational State Transfer, an architectural style, and the applications that implement it are referred as being RESTful. Apart from the technological jargon, this style is important because it defines the way the server responds to stateless calls. There is no client context, no session, just a URL pointing to a resource and the request's method: GET, POST, PUT or DELETE.
+According to the method, the operation requested may be diferent, i.e., while a request to /user/1/ with method GET retrieves a user with ID 1, a request to the same URL with method DELETE erases the user from the database.
+This approach leads to a good independecy of components, as well as scalable system.
+
+
+Scaffolding
+-----------
+
+[TODO]
+

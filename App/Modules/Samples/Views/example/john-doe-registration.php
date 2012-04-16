@@ -1,0 +1,1 @@
+<strong>New register_date: <?=$this->user->register_date->format('Y-m-d H:i:s')?></strong>

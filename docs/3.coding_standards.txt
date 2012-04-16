@@ -1,0 +1,237 @@
+================
+Coding standards
+================
+
+
+Since this framework was intended to inexperienced developers in a company, there was a necessity to clarify some aspects of programming. The coding standards were a target of the possible training lessons. Based on PEAR standards, these principles are used throughtout Cognosys framework in order to maintain a uniform and readable code.
+The point of these standards is not to dictate which code styling is better than another, but to ensure that all code follow the same rules. Coding standards make sure that all code style is consistent, which makes it a lot easier to read and understand for every developer.
+
+
+Use tabs, instead of spaces, to indent the code
+-----------------------------------------------
+
+
+Keep the lines at approximately 75-85 characters long
+-----------------------------------------------------
+
+This avoids the programmer from scrolling horizontally. Also, its much easier to read short lines.
+
+So instead of:
+
+	list($foo, $bar, $baz) = array(Zim::getVal('foo'), Dib::getVal('bar'), Gir::getVal('baz', Gir::DOOM));
+
+write it like this:
+
+	list($foo, $bar, $baz) = array(
+		Zim::getVal('foo'),
+		Dib::getVal('bar'),
+		Gir::getVal('baz', Gir::DOOM)
+	);
+
+Other examples:
+
+	public function someFunctionWithAVeryLongName($first_parameter = 'something',
+		$second_parameter = 'hi', $another_one = array(),
+		$and_at_last = 1234567890
+	) {
+		// ...
+	}
+	
+	if ($a_somewhat_long_condition 
+		&& $perhaps_another_long_condition
+		&& $condition && $small_condition
+	) {
+		// ...
+	}
+	
+	$long_string_value = 'This could be a very long string, '
+		. 'so, why don\'t we just break it in two';
+
+
+Format arrays
+-------------
+
+Even if the array is fairly short, separating it into multiple lines will improve its reading, mainly because of that overhead when declaring an array:
+
+	array(1, 2, 3)
+
+Note: starting in PHP 5.4, an array can be initialized with
+
+	[1, 2, 3]
+
+So, in the most cases it will be better to separate it even if it doesn't pass that line limit. Also, putting some tabs to align the values will provide a much easier reading. Check this example:
+
+	$this->category = Category::create(array(
+		'id'			=> 23,
+		'title'			=> 'Example',
+		'description'	=> 'An example category to illustrate something meaningless...'
+	));
+
+
+Open curly braces on a new line when writing classes and functions
+------------------------------------------------------------------
+
+	class LaunchController
+	{
+		public function fireworksAction()
+		{
+			// ...
+		}
+	}
+
+
+Open the curly brace in the same line of the control structure statement
+------------------------------------------------------------------------
+
+	if ($condition) {
+		// ...
+	}
+	
+	foreach ($items as $k => $item) {
+		// ...
+	}
+
+
+Make boolean negations obvious
+------------------------------
+
+When inverting the value of a boolean in a condition, make sure it is clear and easy to see that important detail.
+Instead of:
+
+	if (!$condition) {
+		// ...
+	}
+
+use it like this:
+
+	if ($condition === false) {
+		// ...
+	}
+
+this is also acceptable:
+
+	if ( ! $condition) {
+		// ...
+	}
+
+Alternativelly to just one exclamation mark, there can be used 3 of them. That is much more visible and returns the same result.
+
+
+Explicitly define the visibility of properties and methods
+----------------------------------------------------------
+
+Instead of:
+
+	function magicalTransformation()
+	{
+		// ...
+	}
+
+write the visibility keyword:
+
+	public function magicalTransformation()
+	{
+		// ...
+	}
+
+
+Class properties and methods start with the 'static' keyword
+------------------------------------------------------------
+
+It's easier to spot class properties and methods this way.
+
+Instead of:
+
+	protected static function validate()
+	{
+		// ...
+	}
+
+write it like this:
+
+	static protected function validate()
+	{
+		// ...
+	}
+
+unless it is abstract:
+
+	abstract static protected function validate();
+
+Also, keep class methods close to each other.
+
+
+First public, then protected and private in the bottom
+------------------------------------------------------
+
+Write public definitions on top, then the protected and, finally, the private ones.
+Ordering methods and properties by visibility will make them easier to find.
+
+
+Document classes, properties and methods
+----------------------------------------
+
+Use PHPDoc comments in every class, property and method. Apart from being useful to remember what each class and method does, it will also let the IDE assist the developer with valuable information on types of parameters and return values, so, specify the class name including the namespace.
+Explain what each element is and what it does, and, if relevant, provide an example of usage with @example tag.
+
+In case of classes, specifiy its authors (each in a @author tag), if it is abstract or final with @abstract or @final tags.
+
+For properties, specify the type of the variable with @var tag and @static if it is a class property.
+
+For methods, specify if it's a class method with @static, if it is final with @final, if it is abstract with @abstract, for each argument specify a @param tag with the type and local variable name, and the return type with @return (when there is no return value, write 'void').
+
+
+Import all namespaces needed
+----------------------------
+
+Instead of using the full class name (prefixed with the namespace), import the class in the top of the file with the 'use' keyword. This way, it's clearer what classes are being used in a file.
+And constants should be before all of them.
+
+
+Use proper naming case
+----------------------
+
+For classes, use "bumpy case": ThisIsAClassName
+
+For methods, use "camel case": thisIsAMethodName()
+If a method is private prefix it with an underscore: _thisIsAPrivateMethod()
+
+For properties, use underscores: $here_is_a_variable
+If it is private prefix it with an underscore: $_a_private_variable
+
+For constants, use underscores and uppercase characters: CONSTANT_NAME
+
+
+PHP code tags
+-------------
+
+Always use <?php ?> instead of <? ?>. When used in a view, if there is something to print, use <?= ?> instead of 'echo' or 'print'.
+
+
+String interpolation
+--------------------
+
+Use curly braces whenever possible while inserting variables into strings, avoiding endless concatenation of short strings.
+
+Instead of:
+
+	$hello = "Hello $name";
+
+write it like this:
+
+	$hello = "Hello {$name}";
+
+This way, it is consistent when calling array values or object methods:
+
+	$hello = "{$greeter->getGreeting()} {$name['first']}";
+
+The exception to this may be the use of function calling. although the following syntax may be applied:
+
+	$hello = "Hello {${getName()}}";
+
+Any string that doesn't need to parse any variable must use single-quotes.
+
+	$hello = 'Hello developers';
+
+
+

@@ -1,0 +1,73 @@
+root: domain.tld
+
+development: true
+
+# new way to choose stages
+# do not use this!
+stages:
+  front: domain.tld
+  back: domain.tld/admin
+
+# do not use this!
+layouts:
+  - default
+  - tablet
+  - admin
+
+database:
+  driver: pdo_mysql
+  host: localhost
+  port: 3306
+  dbname: dbname
+  user: root
+  password: ""
+  unix_socket: /var/run/mysqld/mysqld.sock
+  charset: utf8
+  #logging: false
+
+mail:
+  subject: Subject Here
+  from: from-address@domain.tld
+  #reply: from-address@domain.tld
+  smtp:
+    server: smtp.domain.tld
+    port: 25
+    username: username
+    password: password
+
+# deprecated
+debug:
+  enabled: true
+  report: all
+
+routes:
+  default: '/:controller/:action/:params'
+  match:
+    '/': 'home'
+    '/login': 'user#login'
+    '/logout': 'user#logout'
+
+assets: # for helpers
+  javascript: /js
+  css: /css
+  images: /img
+
+# LOW: not in use yet
+# get request method with $_SERVER['REQUEST_METHOD']
+# the user needs a key to authenticate
+restful:
+  enabled: false
+  methods:
+    get: show
+    post: create
+    put: update
+    delete: delete
+
+modules:
+ - Base
+ - User
+ - News
+ - Samples
+
+developers:
+ - smartins.renato@gmail.com
