@@ -19,7 +19,7 @@ Since the helper scripts are written in Python, it is recommended its installati
 
 
 Cognosys code
-----------------
+-------------
 
 Cognosys is written in PHP and has a set of helper scripts written in Python.
 All the code can be found at the shared folder [FIXME]. Alternativelly there is a Git repository at [FIXME].
@@ -43,10 +43,13 @@ DataTables (www.datatables.net)
 Chosen (http://harvesthq.github.com/chosen/)
 Uniform (http://uniformjs.com)
 qTip2 (http://craigsworks.com/projects/qtip2)
+VideoJS (https://github.com/zencoder/video-js)
+Tinycon (https://github.com/tommoor/tinycon)
+
 
 
 Cognosys overview
-----------------
+-----------------
 
 [FIXME]
 App

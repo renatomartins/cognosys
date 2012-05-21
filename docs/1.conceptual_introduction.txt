@@ -40,8 +40,8 @@ Cognosys applies this principle to its core, allowing the code to be separated b
 Database access
 ---------------
 
-The database is the repository where all data is stored. This implies that the data is managed by a database server independent from Cognosys - a database management system (DBMS). In this case, the choice was MySQL, a widely used DBMS in the open-source community.
-Cognosys uses a database abstraction layer (DBAL) so that the data can be in a wide variety of database management system (DBMS). The abstraction layer includes a system that maps the business objects (the 'models' of the MVC) to tables on the database, so that we can work in Cognosys with PHP objects and not with MySQL query results.
+The database is the repository where all data is stored. This implies that the data is managed by a database server independent from Cognosys - a database management system (DBMS).
+Cognosys uses a database abstraction layer (DBAL) so that the data can be in a wide variety of DBMS. The abstraction layer includes a system that maps the business objects (the 'models' of the MVC) to tables on the database, so that we can work in Cognosys with PHP instead of data retrieved by the DBMS.
 
 
 Security
@@ -71,13 +71,13 @@ There are 2 types of errors in Cognosys: application errors and user errors. App
 
 
 AJAX and REST web services
----------------------------
+--------------------------
 
 [This feature is not implemented yet]
 
-AJAX stands for Asynchronous JavaScript and XML, which is a technique used in a browser to send and receive data from a server asynchronously (without refreshing the page in the browser). The importance of this technique lies in the smaller responses from the server, with just the information requested instead of the whole page, which makes the request much faster than usual. Also, when a page has a lot of text and forms, refreshing it reduces the productivity of the user.
-Now, how does this AJAX requests are handled by the server? To answer that, let's look at REST. This acronym means Representational State Transfer, an architectural style, and the applications that implement it are referred as being RESTful. Apart from the technological jargon, this style is important because it defines the way the server responds to stateless calls. There is no client context, no session, just a URL pointing to a resource and the request's method: GET, POST, PUT or DELETE.
-According to the method, the operation requested may be diferent, i.e., while a request to /user/1/ with method GET retrieves a user with ID 1, a request to the same URL with method DELETE erases the user from the database.
+AJAX stands for Asynchronous JavaScript and XML, which is a technique used in a browser to send and receive data from a server asynchronously (i.e. without refreshing the page in the browser). The importance of this technique lies in the smaller responses from the server, with just the information requested instead of the whole page, which makes the requests faster and provides a smoother and more productive interaction by the user.
+Now, how are these AJAX requests handled by the server? To answer that, let's look at REST. This acronym means Representational State Transfer, an architectural style, and the applications that implement it are referred as being RESTful. Apart from the technological jargon, this style is important because it defines the way the server responds to stateless requests. There is no client context, no session, just a URL pointing to a resource and the request's method: GET, POST, PUT or DELETE - the verbs of HTTP protocol. REST is widely used in web services implementations.
+According to those method, the operation requested may be different, for instance, while a request to /user/1/ with method GET retrieves a user with ID 1, a request to the same URL with method DELETE erases that user from the database.
 This approach leads to a good independecy of components, as well as scalable system.
 
 
