@@ -10,11 +10,11 @@ import os
 import cognosys
 
 model_skelleton = '''<?php
-namespace App\Modules\%s\Models\Entities;
+namespace App\Cogs\%s\Models\Entities;
 use Cognosys\Model;
 
 /**
- * @Entity(repositoryClass="App\Modules\%s\Models\Repositories\%s")
+ * @Entity(repositoryClass="App\Cogs\%s\Models\Repositories\%s")
  * @Table(name="%s")
  */
 class %s extends Model
@@ -36,7 +36,7 @@ class %s extends Model
 '''
 
 repository_skelleton = '''<?php
-namespace App\Modules\%s\Models\Repositories;
+namespace App\Cogs\%s\Models\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 class %s extends EntityRepository
@@ -48,36 +48,36 @@ class %s extends EntityRepository
 '''
 
 
-def createRepository(module_name, repository_name):
-  f = open(cognosys.repositories_path(module_name) + repository_name + '.php', 'w')
-  f.write(repository_skelleton % (module_name, repository_name))
+def createRepository(cog_name, repository_name):
+  f = open(cognosys.repositories_path(cog_name) + repository_name + '.php', 'w')
+  f.write(repository_skelleton % (cog_name, repository_name))
   print ' created model:      ' + os.path.basename(f.name)
   f.close()
 
 
-def createModel(module_name, model_name, table_name):
-  f = open(cognosys.models_path(module_name) + model_name + '.php', 'w')
-  f.write(model_skelleton % (module_name, module_name, model_name, table_name, model_name))
+def createModel(cog_name, model_name, table_name):
+  f = open(cognosys.models_path(cog_name) + model_name + '.php', 'w')
+  f.write(model_skelleton % (cog_name, cog_name, model_name, table_name, model_name))
   print ' created repository: ' + os.path.basename(f.name)
   f.close()
   
-  createRepository(module_name, model_name)
+  createRepository(cog_name, model_name)
 
 
 def main():
   args = sys.argv[1:]
   
   if len(args) == 0:
-    module = raw_input('Module: ')
+    cog = raw_input('Cog: ')
     model = raw_input('Model: ')
     table = raw_input('Table: ')
   elif len(args) < 3:
-    print 'usage: %s ModuleName ModelNameCamelCased table_name_underscored' % os.path.basename(__file__)
+    print 'usage: %s CogName ModelNameCamelCased table_name_underscored' % os.path.basename(__file__)
     sys.exit()
   else:
-    (module, model, table) = args[0], args[1], args[2]
+    (cog, model, table) = args[0], args[1], args[2]
   
-  createModel(module, model, table)
+  createModel(cog, model, table)
 
 
 if __name__ == '__main__':

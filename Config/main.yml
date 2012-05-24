@@ -63,7 +63,7 @@ restful:
     put: update
     delete: delete
 
-modules:
+cogs:
  - Base
  - User
  - News

@@ -1,9 +1,9 @@
 '''
 Creates controller and files for the views
-This script receives at least two argument, the module name and the controller name
+This script receives at least two argument, the cog name and the controller name
 followed by an optional list of view names (all with dashes)
 
-$ controller.py ModuleName controller-name-with-dashes [first-view-name second-view-name ...]
+$ controller.py CogName controller-name-with-dashes [first-view-name second-view-name ...]
 '''
 
 __author__ = 'Renato S. Martins'
@@ -13,7 +13,7 @@ import os
 import cognosys
 
 controller_skelleton = '''<?php
-namespace App\Modules\%s\Controllers;
+namespace App\Cogs\%s\Controllers;
 use Cognosys\Controller;
 
 class %s extends Controller
@@ -36,8 +36,8 @@ def createViews(views_path, views):
 
 
 #TODO: only add actions if controller exists
-def createController(module_name, controller_name, views):
-  views_path = cognosys.views_path(module_name) + controller_name + os.sep
+def createController(cog_name, controller_name, views):
+  views_path = cognosys.views_path(cog_name) + controller_name + os.sep
   if not os.path.isdir(views_path):
     os.makedirs(views_path)
   
@@ -46,8 +46,8 @@ def createController(module_name, controller_name, views):
   if not 'index' in views:
     views.insert(0, 'index')
   controller_actions = getActions(views)
-  f = open(cognosys.controllers_path(module_name) + controller_name + '.php', 'w')
-  f.write(controller_skelleton % (module_name, controller_name, controller_actions))
+  f = open(cognosys.controllers_path(cog_name) + controller_name + '.php', 'w')
+  f.write(controller_skelleton % (cog_name, controller_name, controller_actions))
   print ' created controller: ' + os.path.basename(f.name)
   f.close()
   
@@ -67,16 +67,16 @@ def main():
   args = sys.argv[1:]
   
   if len(args) == 0:
-    module = raw_input('Module: ')
+    cog = raw_input('Cog: ')
     controller = raw_input('Controller: ')
     views = raw_input('Views: ').split(' ')
   elif len(args) < 2:
-    print 'usage: %s ModuleName controller-name-with-dashes [first-view-name second-view-name ...]' % os.path.basename(__file__)
+    print 'usage: %s CogName controller-name-with-dashes [first-view-name second-view-name ...]' % os.path.basename(__file__)
     sys.exit()
   else:
-    (module, controller, views) = args[0], args[1], args[2:]
+    (cog, controller, views) = args[0], args[1], args[2:]
   
-  createController(module, controller, views)
+  createController(cog, controller, views)
 
 
 if __name__ == '__main__':

@@ -6,7 +6,7 @@ use Cognosys\Exceptions\UserError,
 	Doctrine\DBAL\DriverManager,
 	Doctrine\ORM\Tools\Setup,
 	Doctrine\ORM\EntityManager,
-	App\Modules\User\Models\Entities\User,
+	App\Cogs\User\Models\Entities\User,
 	\ReflectionAnnotatedMethod;
 
 /**
@@ -44,7 +44,7 @@ abstract class Controller extends EntityManager
 	protected $_session;
 	
 	/**
-	 * @var App\Modules\User\Models\Entities\User
+	 * @var App\Cogs\User\Models\Entities\User
 	 */
 	protected $_user;
 	
@@ -61,7 +61,7 @@ abstract class Controller extends EntityManager
 		parent::__construct(
 			$connection,
 			Setup::createAnnotationMetadataConfiguration(
-				array(MODULES),
+				array(COGS),
 				Config::get('development', false)
 			),
 			$connection->getEventManager()
@@ -85,20 +85,20 @@ abstract class Controller extends EntityManager
 	 */
 	static final public function factory(Request $request, Response $response, array $database_params)
 	{
-		$module = $response->module();
+		$cog = $response->cog();
 		$controller = $response->controller();
 		$action = $response->action();
 		$params = $response->params();
 		$session = Session::instance();
 		
-		if ($module === null) {
+		if ($cog === null) {
 			throw new UserError(
 				'There is no such area: ' . $response->originalController()
 			);
 		}
 		
 		// use the namespace inside the application
-		$controller_class = "App\\Modules\\{$module}\\Controllers\\{$controller}";
+		$controller_class = "App\\Cogs\\{$cog}\\Controllers\\{$controller}";
 		
 		// renders the view even if there is no action
 		$instance = new $controller_class($database_params);
@@ -425,7 +425,7 @@ abstract class Controller extends EntityManager
 	 * @example
 	 * $filename = 'edit' if you want to load the file 'edit.php' on
 	 * UserController the file must be at App/User/Views/user/edit.php,
-	 * if controller is, e.g. NewsItemsController (module News), view must be at
+	 * if controller is, e.g. NewsItemsController (cog News), view must be at
 	 * App/News/Views/news-items/edit.php
 	 */
 	final protected function render($filename)
@@ -490,7 +490,7 @@ abstract class Controller extends EntityManager
 	private function _captureView($filename)
 	{
 		$output = '';
-		$file = MODULES . "{$this->_response->module()}/Views/"
+		$file = COGS . "{$this->_response->cog()}/Views/"
 			. "{$this->_response->originalController()}/{$filename}.php";
 		
 		// include here the helpers to use in the view

@@ -10,7 +10,7 @@ define('CONFIG', ROOT . 'Config/');
 define('PUBLIC', ROOT . 'public/');
 define('DOCTRINE', LIB . 'Doctrine/');
 define('APP', ROOT . 'App/');
-define('MODULES', APP . 'Modules/');
+define('COGS', APP . 'Cogs/');
 define('LAYOUT', APP . 'Layouts/');
 
 require_once COGNOSYS . 'Autoloader.php';
@@ -20,6 +20,7 @@ require_once LIB . 'addendum/annotations.php';
  * Initializes Cognosys, launches everything else
  * @author Renato S. Martins <smartins.renato@gmail.com>
  */
+//FIXME: update Cogs namespace
 class Cognosys
 {
 	/**
@@ -40,7 +41,7 @@ class Cognosys
 		// Register contraint classes to use in the annotations of controllers
 		Addendum::registerNamespaces('Cognosys\\Constraints');
 		
-		Config::load(CONFIG . 'test.yml');
+		Config::load(CONFIG . 'main.yml');
 		
 		if (Config::get('development')) {
 			error_reporting(E_ALL | E_STRICT);
@@ -61,7 +62,7 @@ class Cognosys
 			$response = new Response(
 				$request,
 				Config::get('routes'),
-				Config::get('modules')
+				Config::get('cogs')
 			);
 			
 			$controller = Controller::factory(

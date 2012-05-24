@@ -17,7 +17,7 @@ class Response
 	 * 
 	 * @var string
 	 */
-	private $_module;
+	private $_cog;
 	
 	/**
 	 * @var string
@@ -55,7 +55,7 @@ class Response
 	 *   $this->_action = 'edit'
 	 *   $this->_params = array('group', '2')
 	 */
-	public function __construct(Request $request, array $routes, array $modules)
+	public function __construct(Request $request, array $routes, array $cogs)
 	{
 		if (isset($routes['default']) === false
 			|| isset($routes['match']) === false
@@ -70,15 +70,15 @@ class Response
 		
 		$this->_selectRoute();
 		$this->_renameProperties();
-		$this->_selectModule($modules);
+		$this->_selectCog($cogs);
 	}
 	
 	/**
 	 * @return string
 	 */
-	public function module()
+	public function cog()
 	{
-		return $this->_module;
+		return $this->_cog;
 	}
 	
 	/**
@@ -116,7 +116,7 @@ class Response
 	public function __toString()
 	{
 		return
-			'Module: ' . $this->_module . "\n" .
+			'Cog: ' . $this->_cog . "\n" .
 			'Controller: ' . $this->_controller . "\n" .
 			'Action: ' . $this->_action . "\n" .
 			'Parameters: (' . join(', ', $this->_params) . ')';
@@ -217,20 +217,20 @@ class Response
 	}
 	
 	/**
-	 * Finds to which module belongs the selected controller
-	 * @param array $modules
+	 * Finds to which cog belongs the selected controller
+	 * @param array $cogs
 	 * @return void
 	 * @throws \Exception
 	 */
-	private function _selectModule($modules)
+	private function _selectCog($cogs)
 	{
-		foreach ($modules as $module) {
-			if (is_file(MODULES . $module . '/Controllers/' . $this->_controller . '.php')) {
-				$this->_module = $module;
+		foreach ($cogs as $cog) {
+			if (is_file(COGS . $cog . '/Controllers/' . $this->_controller . '.php')) {
+				$this->_cog = $cog;
 				return;
 			}
 		}
 		
-		$this->_module = null;
+		$this->_cog = null;
 	}
 }

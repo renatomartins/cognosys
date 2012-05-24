@@ -59,7 +59,7 @@ abstract class Model
 	 * Helper function to get the class name
 	 * @static
 	 * @return string
-	 * @example User::classname() -> "App\Modules\User\Models\Entities\User"
+	 * @example User::classname() -> "App\Cogs\User\Models\Entities\User"
 	 */
 	static public function classname()
 	{
