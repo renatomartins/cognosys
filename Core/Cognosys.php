@@ -24,19 +24,10 @@ class Cognosys
 {
 	/**
 	 * Main function
+	 * Launches core classes of the framework
 	 * @static
-	 * @param int $stage
 	 */
 	static public function run()
-	{
-		$wt = new Cognosys;
-		$wt->_init();
-	}
-	
-	/**
-	 * Launches core classes of the framework
-	 */
-	private function _init()
 	{
 		date_default_timezone_set('UTC');
 		
@@ -46,9 +37,10 @@ class Cognosys
 			DOCTRINE	// loads independent library components in Doctrine, ie. Symfony
 		);
 		
+		// Register contraint classes to use in the annotations of controllers
 		Addendum::registerNamespaces('Core\\Constraints');
 		
-		Config::load(CONFIG . 'development.yml');
+		Config::load(CONFIG . 'main.yml');
 		
 		if (Config::get('development')) {
 			error_reporting(E_ALL | E_STRICT);
@@ -82,7 +74,7 @@ class Cognosys
 			$e->handle($request, $response);
 		} catch (Exception $e) {
 			//TODO: handle everything else
-			echo "Error alert! Repeat: error alert! Wiiiu Wiiiu Wiii!<br>";
+			echo "An unexpected exception occured!<br><br>";
 			var_dump($e);
 		}
 	}

@@ -5,6 +5,32 @@ use \PHPMailer,
 
 require LIB . 'PHPMailer/class.phpmailer.php';
 
+/**
+ * Sends emails after configuration with Mail::configure()
+ * @author Renato S. Martins <smartins.renato@gmail.com>
+ * @example
+ * Mail::configure(array(
+ *     'from'    => 'my-email@email.com',
+ *     'subject' => 'Prepended subject', // will be enclosed in square brackets
+ *     'smtp'    => array(
+ *         'server'   => 'smtp.email.com',
+ *         'port'     => 25,
+ *         'username' => 'username',
+ *         'password' => 'password'
+ *     )
+ * ));
+ * Mail::send(
+ *     array('a-user@email.com', 'another-user@email.com'),
+ *     'Subject',
+ *     'My message to you',
+ *     Mail::PRIORITY_HIGH  //optional
+ * );
+ * Mail::send(
+ *     array('lonely-user@email.com'),
+ *     'Other email subject',
+ *     'Little message'
+ * );
+ */
 class Mail
 {
 	const PRIORITY_HIGH = 1;
@@ -13,6 +39,11 @@ class Mail
 	
 	static private $_config;
 	
+	/**
+	 * @static
+	 * @param array $config - Key 'from' is required
+	 * @return void
+	 */
 	static public function configure(array $config)
 	{
 		self::$_config = $config;
