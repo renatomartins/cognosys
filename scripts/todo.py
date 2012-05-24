@@ -6,7 +6,7 @@ Alternatively, the script can take files and directories as input to list its ta
 Accepted tags (listed by priority): BUG, FIXME, TODO, LOW
 """
 
-__author__ = 'Renato S. Martins'
+__author__ = 'Renato S. Martins <smartins.renato@gmail.com>'
 
 import os
 import re

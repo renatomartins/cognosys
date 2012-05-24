@@ -1,7 +1,7 @@
 """
 Utility functions to the cognosys framework
 """
-__author__ = 'Renato S. Martins'
+__author__ = 'Renato S. Martins <smartins.renato@gmail.com>'
 
 import os
 from re import sub

@@ -14,7 +14,7 @@ import cognosys
 
 controller_skelleton = '''<?php
 namespace App\Modules\%s\Controllers;
-use Core\Controller;
+use Cognosys\Controller;
 
 class %s extends Controller
 {%s}

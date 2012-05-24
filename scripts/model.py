@@ -11,7 +11,7 @@ import cognosys
 
 model_skelleton = '''<?php
 namespace App\Modules\%s\Models\Entities;
-use Core\Model;
+use Cognosys\Model;
 
 /**
  * @Entity(repositoryClass="App\Modules\%s\Models\Repositories\%s")
@@ -30,7 +30,7 @@ class %s extends Model
 	
 	public function validate()
 	{
-		// use Core\Validators to validate model properties
+		// use Cognosys\Validators to validate model properties
 	}
 }
 '''

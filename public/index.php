@@ -1,4 +1,4 @@
 <?php
-use Core\Cognosys;
-require_once '../Core/Cognosys.php';
+use Cognosys\Cognosys;
+require_once '../Cognosys/Cognosys.php';
 Cognosys::run();
