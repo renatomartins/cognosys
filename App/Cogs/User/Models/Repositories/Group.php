@@ -1,5 +1,5 @@
 <?php
-namespace App\Modules\User\Models\Repositories;
+namespace App\Cogs\User\Models\Repositories;
 use Doctrine\ORM\EntityRepository;
 
 class Group extends EntityRepository

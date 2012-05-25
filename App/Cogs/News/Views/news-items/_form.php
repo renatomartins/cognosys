@@ -1,5 +1,5 @@
 <?php
-use App\Modules\News\Models\Entities\Category;
+use App\Cogs\News\Models\Entities\Category;
 $that = $this;
 ?>
 <?=form(function ($f) use($that) { ?>

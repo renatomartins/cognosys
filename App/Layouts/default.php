@@ -18,7 +18,7 @@
 			
 		</div>
 
-		<?=alerts($this->_alerts)?>
+		<?=alerts($this->alert())?>
 	
 		<div id='content'> 
 			<div><!-- just padding -->

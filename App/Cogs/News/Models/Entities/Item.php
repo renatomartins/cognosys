@@ -1,18 +1,18 @@
 <?php
-namespace App\Modules\News\Models\Entities;
-use Core\Model,
-	Core\AlertManager,
-	Core\Validators\Validator,
-	Core\Validators\String,
-	Core\Validators\Boolean,
-	Core\Validators\Integer,
+namespace App\Cogs\News\Models\Entities;
+use Cognosys\Model,
+	Cognosys\AlertManager,
+	Cognosys\Validators\Validator,
+	Cognosys\Validators\String,
+	Cognosys\Validators\Boolean,
+	Cognosys\Validators\Integer,
 	Doctrine\Common\Collections\ArrayCollection,
 	\DateTime;
 
 /**
- * @Entity(repositoryClass="App\Modules\News\Models\Repositories\Item")
+ * @Entity(repositoryClass="App\Cogs\News\Models\Repositories\Item")
  * @Table(name="news_items")
- * @author Renato S. Martins
+ * @author Renato S. Martins <smartins.renato@gmail.com>
  */
 class Item extends Model
 {
@@ -39,19 +39,19 @@ class Item extends Model
 	protected $body;
 	
 	/**
-	 * @OneToOne(targetEntity="App\Modules\Media\Models\Entities\Gallery", cascade={"persist", "remove"})
+	 * @OneToOne(targetEntity="App\Cogs\Media\Models\Entities\Gallery", cascade={"persist", "remove"})
 	 * @JoinColumn(name="gallery_id")
 	 */
 	protected $gallery;
 	
 	/**
-	 * @ManyToOne(targetEntity="App\Modules\User\Models\Entities\User", cascade={"persist"})
+	 * @ManyToOne(targetEntity="App\Cogs\User\Models\Entities\User", cascade={"persist"})
 	 * @JoinColumn(name="author_id")
 	 */
 	protected $author;
 	
 	/**
-	 * @ManyToOne(targetEntity="App\Modules\User\Models\Entities\User", cascade={"persist"})
+	 * @ManyToOne(targetEntity="App\Cogs\User\Models\Entities\User", cascade={"persist"})
 	 * @JoinColumn(name="approver_id")
 	 */
 	protected $approver;

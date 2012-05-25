@@ -1,7 +1,7 @@
 <?php
-namespace App\Modules\Samples\Controllers;
-use Core\Controller,
-	Core\Alert;
+namespace App\Cogs\Samples\Controllers;
+use Cognosys\Controller,
+	Cognosys\Alert;
 
 /**
  * @deprecated possibly

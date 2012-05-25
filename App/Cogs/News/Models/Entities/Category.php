@@ -1,12 +1,12 @@
 <?php
-namespace App\Modules\News\Models\Entities;
-use Core\Model,
+namespace App\Cogs\News\Models\Entities;
+use Cognosys\Model,
 	Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="App\Modules\News\Models\Repositories\Category")
+ * @Entity(repositoryClass="App\Cogs\News\Models\Repositories\Category")
  * @Table(name="news_categories")
- * @author Renato S. Martins
+ * @author Renato S. Martins <smartins.renato@gmail.com>
  */
 class Category extends Model
 {

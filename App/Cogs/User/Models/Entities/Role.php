@@ -1,10 +1,11 @@
 <?php
-namespace App\Modules\User\Models\Entities;
-use Core\Model;
+namespace App\Cogs\User\Models\Entities;
+use Cognosys\Model;
 
 /**
- * @Entity(repositoryClass="App\Modules\User\Models\Repositories\Role")
+ * @Entity(repositoryClass="App\Cogs\User\Models\Repositories\Role")
  * @Table(name="roles")
+ * @author Renato S. Martins <smartins.renato@gmail.com>
  */
 class Role extends Model
 {

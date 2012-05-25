@@ -25,7 +25,7 @@
 	</tr>
 	<tr>
 		<td>Category</td>
-		<?php if ($this->item->category() instanceof App\Modules\News\Models\Entities\Category): ?>
+		<?php if ($this->item->category() instanceof App\Cogs\News\Models\Entities\Category): ?>
 		<td><?=$this->item->category()->title()?></td>
 		<?php else: ?>
 		<td>No category...</td>
@@ -45,7 +45,7 @@
 	</tr>
 	<tr>
 		<td>Gallery</td>
-		<?php if ($this->item->gallery() instanceof App\Modules\Media\Models\Entities\Gallery): ?>
+		<?php if ($this->item->gallery() instanceof App\Cogs\Media\Models\Entities\Gallery): ?>
 		<td><?=count($this->item->gallery()->images())?> images</td>
 		<?php else: ?>
 		<td>No gallery available...</td>

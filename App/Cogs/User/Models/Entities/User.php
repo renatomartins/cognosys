@@ -1,15 +1,17 @@
 <?php
-namespace App\Modules\User\Models\Entities;
-use Core\Model,
+namespace App\Cogs\User\Models\Entities;
+use Cognosys\Model,
 	\DateTime,
 	Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="App\Modules\User\Models\Repositories\User")
+ * @Entity(repositoryClass="App\Cogs\User\Models\Repositories\User")
  * @Table(name="users")
+ * @author Renato S. Martins <smartins.renato@gmail.com>
  */
 class User extends Model
 {
+	//TODO: is this safe to share??
 	static private $_salt = '5Ga01jfgas0Gashdas9Jf';
 	
 	/**

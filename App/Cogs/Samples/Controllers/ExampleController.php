@@ -1,9 +1,9 @@
 <?php
-namespace App\Modules\Samples\Controllers;
-use Core\Controller,
-	App\Modules\User\Models\Entities\User,
-	App\Modules\User\Models\Entities\UserGroup,
-	App\Modules\User\Models\Units\Privileges,
+namespace App\Cogs\Samples\Controllers;
+use Cognosys\Controller,
+	App\Cogs\User\Models\Entities\User,
+	App\Cogs\User\Models\Entities\UserGroup,
+	App\Cogs\User\Models\Units\Privileges,
 	\DateTime;
 
 /**

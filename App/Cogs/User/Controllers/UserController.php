@@ -1,8 +1,8 @@
 <?php
-namespace App\Modules\User\Controllers;
-use Core\Controller,
-	Core\Alert,
-	App\Modules\User\Models\Entities\User;
+namespace App\Cogs\User\Controllers;
+use Cognosys\Controller,
+	Cognosys\Alert,
+	App\Cogs\User\Models\Entities\User;
 
 class UserController extends Controller
 {

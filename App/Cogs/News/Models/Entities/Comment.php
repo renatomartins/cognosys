@@ -1,12 +1,12 @@
 <?php
-namespace App\Modules\News\Models\Entities;
-use Core\Model,
+namespace App\Cogs\News\Models\Entities;
+use Cognosys\Model,
 	\DateTime;
 
 /**
- * @Entity(repositoryClass="App\Modules\News\Models\Repositories\Comment")
+ * @Entity(repositoryClass="App\Cogs\News\Models\Repositories\Comment")
  * @Table(name="news_comments")
- * @author Renato S. Martins
+ * @author Renato S. Martins <smartins.renato@gmail.com>
  */
 class Comment extends Model
 {
@@ -18,7 +18,7 @@ class Comment extends Model
 	protected $id;
 	
 	/**
-	 * @ManyToOne(targetEntity="App\Modules\User\Models\Entities\User")
+	 * @ManyToOne(targetEntity="App\Cogs\User\Models\Entities\User")
 	 * @JoinColumn(name="author_id")
 	 */
 	protected $author;
@@ -40,7 +40,7 @@ class Comment extends Model
 	protected $news_item;
 	
 	/**
-	 * @ManyToOne(targetEntity="App\Modules\User\Models\Entities\User")
+	 * @ManyToOne(targetEntity="App\Cogs\User\Models\Entities\User")
 	 * @JoinColumn(name="approver_id")
 	 */
 	protected $approver;

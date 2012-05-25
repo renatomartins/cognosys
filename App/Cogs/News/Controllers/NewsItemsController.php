@@ -1,10 +1,10 @@
 <?php
-namespace App\Modules\News\Controllers;
-use Core\Controller,
-	Core\Alert,
-	Core\Exceptions\UserError,
-	App\Modules\News\Models\Entities\Item,
-	App\Modules\News\Models\Entities\Category;
+namespace App\Cogs\News\Controllers;
+use Cognosys\Controller,
+	Cognosys\Alert,
+	Cognosys\Exceptions\UserError,
+	App\Cogs\News\Models\Entities\Item,
+	App\Cogs\News\Models\Entities\Category;
 
 //TODO: constraints defined in the class, global to all actions
 class NewsItemsController extends Controller

@@ -1,6 +1,6 @@
 <?php
-namespace App\Modules\Base\Controllers;
-use Core\Controller;
+namespace App\Cogs\Base\Controllers;
+use Cognosys\Controller;
 
 class HomeController extends Controller
 {

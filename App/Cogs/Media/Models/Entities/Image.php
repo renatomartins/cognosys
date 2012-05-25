@@ -1,9 +1,9 @@
 <?php
-namespace App\Modules\Media\Models\Entities;
-use Core\Model;
+namespace App\Cogs\Media\Models\Entities;
+use Cognosys\Model;
 
 /**
- * @Entity(repositoryClass="App\Modules\Media\Models\Repositories\Image")
+ * @Entity(repositoryClass="App\Cogs\Media\Models\Repositories\Image")
  * @Table(name="images")
  */
 class Image extends Model

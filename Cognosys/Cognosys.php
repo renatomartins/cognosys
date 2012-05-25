@@ -20,7 +20,6 @@ require_once LIB . 'addendum/annotations.php';
  * Initializes Cognosys, launches everything else
  * @author Renato S. Martins <smartins.renato@gmail.com>
  */
-//FIXME: update Cogs namespace
 class Cognosys
 {
 	/**

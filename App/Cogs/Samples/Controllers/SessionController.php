@@ -1,7 +1,7 @@
 <?php
-namespace App\Modules\Samples\Controllers;
-use Core\Controller,
-	App\Modules\User\Models\Entities\User;
+namespace App\Cogs\Samples\Controllers;
+use Cognosys\Controller,
+	App\Cogs\User\Models\Entities\User;
 
 /**
  * @deprecated possibly

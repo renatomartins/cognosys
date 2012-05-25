@@ -1,10 +1,10 @@
 <?php
-namespace App\Modules\Media\Models\Entities;
-use Core\Model,
+namespace App\Cogs\Media\Models\Entities;
+use Cognosys\Model,
 	Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * @Entity(repositoryClass="App\Modules\Media\Models\Repositories\Gallery")
+ * @Entity(repositoryClass="App\Cogs\Media\Models\Repositories\Gallery")
  * @Table(name="galleries")
  */
 class Gallery extends Model
