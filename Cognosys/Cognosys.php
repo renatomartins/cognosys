@@ -74,7 +74,7 @@ class Cognosys
 			$e->handle($request, $response);
 		} catch (Exception $e) {
 			//TODO: handle everything else
-			echo "An unexpected exception occured!<br><br>";
+			echo "An unexpected error occured!<br><br>";
 			var_dump($e);
 		}
 	}

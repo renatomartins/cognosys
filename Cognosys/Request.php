@@ -117,6 +117,15 @@ class Request
 	{
 		return $this->_accept;
 	}
+
+	/**
+	 * Wether the accept type of the request is JSON
+	 * @return bool
+	 */
+	public function isJson()
+	{
+		return $this->_accept === 'json';
+	}
 	
 	/**
 	 * The protocol of this request

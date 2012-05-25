@@ -10,6 +10,7 @@ stages:
 
 # do not use this!
 layouts:
+  - bootstrap
   - default
   - tablet
   - admin
