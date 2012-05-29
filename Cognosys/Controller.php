@@ -105,7 +105,7 @@ abstract class Controller extends EntityManager
 		$instance->_request = $request;
 		$instance->_response = $response;
 		$instance->_session = $session;
-		$instance->_alerts = AlertManager::getAll();
+		//$instance->_alerts = AlertManager::getAll();
 		$instance->_user = $instance->repo(User::classname())->find(
 			$session->get('user', false)
 		);
@@ -289,14 +289,16 @@ abstract class Controller extends EntityManager
 	 */
 	final public function alert($type = null, $message = null)
 	{
-		if ($type === null) {
-			return $this->_alerts;
-		}
+//		if ($type === null) {
+//			//return $this->_alerts;
+//			return AlertManager::byType();
+//		}
 		
 		if ($message === null) {
-			return array_filter($this->_alerts, function($alert) use ($type) {
-				return $alert->type() === $type;
-			});
+			//return array_filter($this->_alerts, function($alert) use ($type) {
+			//	return $alert->type() === $type;
+			//});
+			return AlertManager::byType($type);
 		}
 		
 		AlertManager::set($type, $message);

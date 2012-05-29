@@ -8,7 +8,8 @@
     <meta name="author" content="">
 
     <!-- Le styles -->
-    <link href="css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/css/humane-jackedup.css">
     <style type="text/css">
       body {
         padding-top: 60px;
@@ -18,7 +19,7 @@
         padding: 9px 0;
       }
     </style>
-    <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/css/bootstrap-responsive.css" rel="stylesheet">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -87,7 +88,7 @@
         </div><!--/span-->
         <div class="span9">
           <div class="hero-unit">
-            <h1>Hello, nerds!</h1>
+            <h1>Hello NSN!</h1>
             <p>This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
             <p><a class="btn btn-primary btn-large">Learn more &raquo;</a></p>
           </div>
@@ -139,19 +140,26 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="js/jquery-1.7.2.min.js"></script>
-    <script src="js/bootstrap/bootstrap-transition.js"></script>
-    <script src="js/bootstrap/bootstrap-alert.js"></script>
-    <script src="js/bootstrap/bootstrap-modal.js"></script>
-    <script src="js/bootstrap/bootstrap-dropdown.js"></script>
-    <script src="js/bootstrap/bootstrap-scrollspy.js"></script>
-    <script src="js/bootstrap/bootstrap-tab.js"></script>
-    <script src="js/bootstrap/bootstrap-tooltip.js"></script>
-    <script src="js/bootstrap/bootstrap-popover.js"></script>
-    <script src="js/bootstrap/bootstrap-button.js"></script>
-    <script src="js/bootstrap/bootstrap-collapse.js"></script>
-    <script src="js/bootstrap/bootstrap-carousel.js"></script>
-    <script src="js/bootstrap/bootstrap-typeahead.js"></script>
-
+    <script src="/js/jquery-1.7.2.min.js"></script>
+    <script src="/js/bootstrap/bootstrap-transition.js"></script>
+    <script src="/js/bootstrap/bootstrap-alert.js"></script>
+    <script src="/js/bootstrap/bootstrap-modal.js"></script>
+    <script src="/js/bootstrap/bootstrap-dropdown.js"></script>
+    <script src="/js/bootstrap/bootstrap-scrollspy.js"></script>
+    <script src="/js/bootstrap/bootstrap-tab.js"></script>
+    <script src="/js/bootstrap/bootstrap-tooltip.js"></script>
+    <script src="/js/bootstrap/bootstrap-popover.js"></script>
+    <script src="/js/bootstrap/bootstrap-button.js"></script>
+    <script src="/js/bootstrap/bootstrap-collapse.js"></script>
+    <script src="/js/bootstrap/bootstrap-carousel.js"></script>
+    <script src="/js/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="/js/humane-3.0.0.js"></script>
+    <script src="/js/cognosys.js"></script>
+    <script>
+      onload = function(){
+        cognosys.init()
+        <?=alerts()?>
+      }
+    </script>
   </body>
 </html>

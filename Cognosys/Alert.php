@@ -7,10 +7,10 @@ namespace Cognosys;
  */
 class Alert
 {
-	const ERROR		= 1;
-	const WARNING	= 2;
-	const INFO		= 3;
-	const SUCCESS	= 4;
+	const ERROR		= 'error';
+	const WARNING	= 'warning';
+	const INFO		= 'info';
+	const SUCCESS	= 'success';
 	
 	/**
 	 * One of the constants of the AlertManager
@@ -54,7 +54,7 @@ class Alert
 	public function render()
 	{
 		return <<<EOT
-<div class="alert-{$this->_type}">{$this->_message}</div>
+webtool.alert('{$this->_message}', '{$this->_type}')
 EOT;
 	}
 }

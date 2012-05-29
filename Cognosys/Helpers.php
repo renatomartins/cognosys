@@ -17,16 +17,32 @@ function form($content, array $params = array())
 	return FormTag::create(Helpers::$controller, $params, $content);
 }
 
-function alerts(array &$alerts)
+function alerts()
 {
-	$result = '<div id="alerts">';
-	foreach ($alerts as $i => $alert) {
-		if ($alert->field() === null) {
-			$result .= $alert->render();
-			unset($alerts[$i]);
-		}
+	$alerts = Helpers::$controller->alert();
+	if (count($alerts) === 0) {
+		return;
 	}
-	print $result . '</div>';
+
+	foreach ($alerts as $type => $elements) {
+		$result = "cognosys.alert(['";
+
+		$result .= join("','", array_map(function($alert) {
+			return addslashes($alert->message());
+		}, $elements));
+
+		print $result . "'], '{$type}')\n";
+	}
+}
+
+function js()
+{
+
+}
+
+function css()
+{
+
 }
 
 //TODO: other functions to render other tags

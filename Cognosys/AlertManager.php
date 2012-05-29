@@ -63,16 +63,27 @@ class AlertManager
 	 * @return array
 	 * @throws Cognosys\Exceptions\ApplicationError
 	 */
-	static public function byType($type)
+	static public function byType($type = null)
 	{
-		self::_assertType($type);
-		$alerts = self::_getFromSession();
 		$byType = array();
 		
-		foreach ($alerts as $i => $alert) {
-			if ($alert->type() === $type) {
-				$byType[] = $alert;
+		if ($type === null) {
+			$alerts = self::getAll();
+			foreach ($alerts as $i => $alert) {
+				if ( ! isset($byType[$alert->type()])) {
+					$byType[$alert->type()] = array();
+				}
+				$byType[$alert->type()][] = $alert;
 				unset($alerts[$i]);
+			}
+		} else {
+			self::_assertType($type);
+			$alerts = self::_getFromSession();
+			foreach ($alerts as $i => $alert) {
+				if ($alert->type() === $type) {
+					$byType[] = $alert;
+					unset($alerts[$i]);
+				}
 			}
 		}
 		
