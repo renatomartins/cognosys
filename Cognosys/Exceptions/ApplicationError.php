@@ -42,7 +42,8 @@ class ApplicationError extends Error
 	* Response:
 		{$response}
 EOT;
-		
+		//FIXME: get a view to show the error
+		var_dump($content);die;
 		if (Config::get('development')) {
 			$this->message = nl2br($content);
 		} else {

@@ -1,3 +1,4 @@
+#TODO: categorize into multiple configuration files
 root: domain.tld
 
 development: true
@@ -8,13 +9,43 @@ stages:
   front: domain.tld
   back: domain.tld/admin
 
-# do not use this!
-layouts:
-  - bootstrap
-  - default
-  - tablet
-  - admin
+#TODO: better structure
+templates:
+  default: bootstrap
+  options:
+    bootstrap:
+      css:
+        - 'bootstrap'
+        - 'humane-jackedup'
+        - 'bootstrap-responsive'
+      js:
+        - 'jquery-1.7.2.min'
+        - 'bootstrap/bootstrap-transition'
+        - 'bootstrap/bootstrap-alert'
+        - 'bootstrap/bootstrap-modal'
+        - 'bootstrap/bootstrap-dropdown'
+        - 'bootstrap/bootstrap-scrollspy'
+        - 'bootstrap/bootstrap-tab'
+        - 'bootstrap/bootstrap-tooltip'
+        - 'bootstrap/bootstrap-popover'
+        - 'bootstrap/bootstrap-button'
+        - 'bootstrap/bootstrap-collapse'
+        - 'bootstrap/bootstrap-carousel'
+        - 'bootstrap/bootstrap-typeahead'
+        - 'humane-3.0.0'
+        - 'cognosys'
+        - 'app'
+    default:
+      css:
+      js:
+    tablet:
+      css:
+      js:
+    admin:
+      css:
+      js:
 
+# database configurations
 database:
   driver: pdo_mysql
   host: localhost
@@ -26,6 +57,7 @@ database:
   charset: utf8
   #logging: false
 
+# smtp configurations and default email settings
 mail:
   subject: Subject Here
   from: from-address@domain.tld
@@ -41,6 +73,7 @@ debug:
   enabled: true
   report: all
 
+# oversimplified routing, needs more features
 routes:
   default: '/:controller/:action/:params'
   match:
@@ -48,10 +81,14 @@ routes:
     '/login': 'user#login'
     '/logout': 'user#logout'
 
+# TODO: not in use yet
+# assets paths
 assets: # for helpers
-  javascript: /js
+  js: /js
   css: /css
-  images: /img
+  img: /img
+  less: /less
+  coffee: /coffee
 
 # LOW: not in use yet
 # get request method with $_SERVER['REQUEST_METHOD']
@@ -64,11 +101,13 @@ restful:
     put: update
     delete: delete
 
+# this cogs are enabled
 cogs:
  - Base
  - User
  - News
  - Samples
 
+# to send emails with notifications
 developers:
  - smartins.renato@gmail.com

@@ -49,7 +49,7 @@ abstract class Config
 	static final public function get($key, $default = null)
 	{
 		if (isset(self::$_properties) === null) {
-			throw new Exception('Use Config::load to load a ocnfiguration file');
+			throw new Exception('Use Config::load to load a configuration file');
 		}
 		
 		$hierarchy = explode('/', $key);

@@ -1,6 +1,7 @@
 <?php
 namespace Cognosys;
-use \Addendum,
+use Cognosys\Templates\Decorator,
+	\Addendum,
 	\Exception;
 
 define('ROOT', realpath(dirname(__FILE__) . '/..') . '/');
@@ -11,7 +12,7 @@ define('PUBLIC', ROOT . 'public/');
 define('DOCTRINE', LIB . 'Doctrine/');
 define('APP', ROOT . 'App/');
 define('COGS', APP . 'Cogs/');
-define('LAYOUT', APP . 'Layouts/');
+define('TEMPLATES', APP . 'Templates/');
 
 require_once COGNOSYS . 'Autoloader.php';
 require_once LIB . 'addendum/annotations.php';
@@ -48,7 +49,7 @@ class Cognosys
 		
 		Mail::configure(Config::get('mail'));
 		
-		Layout::register(LAYOUT, Config::get('layouts'));
+//		Layout::register(LAYOUT, Config::get('layouts'));
 		
 		$request = null;
 		$response = null;
@@ -63,15 +64,17 @@ class Cognosys
 				Config::get('routes'),
 				Config::get('cogs')
 			);
-			
+
 			$controller = Controller::factory(
 				$request,
 				$response,
 				Config::get('database')
 			);
+			$controller->setDecorator(Config::get('templates/default'));
 			$controller->run();
 		} catch (Error $e) {
-			$e->handle($request, $response);
+			//TODO: set a decorator for the error
+			$e->handle($request, $response);//, Config::get('templates/error'));
 		} catch (Exception $e) {
 			//TODO: handle everything else
 			echo "An unexpected error occured!<br><br>";

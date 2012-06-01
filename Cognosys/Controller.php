@@ -2,6 +2,8 @@
 namespace Cognosys;
 use Cognosys\Exceptions\UserError,
 	Cognosys\Exceptions\ApplicationError,
+	Cognosys\Templates\Decorator,
+	Cognosys\Templates\View,
 	Cognosys\Validators\Validator,
 	Doctrine\DBAL\DriverManager,
 	Doctrine\ORM\Tools\Setup,
@@ -18,17 +20,22 @@ use Cognosys\Exceptions\UserError,
 abstract class Controller extends EntityManager
 {
 	/**
-	 * @var CognosysCognosys\Request
+	 * @var Cognosys\Request
 	 */
 	private $_request;
 	
 	/**
-	 * @var CognosysCognosys\Response
+	 * @var Cognosys\Response
 	 */
 	private $_response;
-	
+
 	/**
-	 * @var string
+	 * @var Cognosys\Templates\Decorator
+	 */
+	private $_decorator;
+
+	/**
+	 * @var Cognosys\Templates\View
 	 */
 	private $_view;
 	
@@ -80,10 +87,12 @@ abstract class Controller extends EntityManager
 	 * @param Cognosys\Request $request
 	 * @param Cognosys\Response $response
 	 * @param array $database_params
+	 * @param Cognosys\Templates\Decorator
 	 * @return Cognosys\Controller
 	 * @throws Exceptions\UserError if the controller name is unknown
 	 */
-	static final public function factory(Request $request, Response $response, array $database_params)
+	static final public function factory(Request $request, Response $response,
+										 array $database_params)
 	{
 		$cog = $response->cog();
 		$controller = $response->controller();
@@ -105,7 +114,7 @@ abstract class Controller extends EntityManager
 		$instance->_request = $request;
 		$instance->_response = $response;
 		$instance->_session = $session;
-		//$instance->_alerts = AlertManager::getAll();
+		$instance->_view = new View($instance);
 		$instance->_user = $instance->repo(User::classname())->find(
 			$session->get('user', false)
 		);
@@ -123,11 +132,15 @@ abstract class Controller extends EntityManager
 	 */
 	final public function run()
 	{
-		$view = TextUtil::dasherize($this->_response->action());
+//		$view = TextUtil::dasherize($this->_response->action());
 		$action = $this->_response->action() . 'Action';
 		$params = $this->_response->params();
+
+		// get variables of the abstract controller
+		$vars = get_object_vars($this);
 		
 		if (is_callable(array($this, $action))) {
+			//TODO: put these assertions in a private method
 			$refl = new ReflectionAnnotatedMethod($this, $action);
 			
 			if ( ! $this->_authorize($refl->getAllAnnotations())) {
@@ -145,17 +158,26 @@ abstract class Controller extends EntityManager
 			// closes the database connection because only a controller can access it
 			$this->close();
 		}
-		
-		if ( ! isset($this->_view)) {
-			$this->render($view);
-		}
+
+		// get only variables set in the controller instance
+		$vars = array_diff_key(get_object_vars($this), $vars);
+		$this->_view->setVariables($vars);
+		$this->_view->setDecorator($this->_decorator);
+
+		$this->_view->render();
+		$this->_view->show();
+
+//		if ( ! isset($this->_view)) {
+//			$this->render($view);
+//		}
+
 		
 		//FIXME: in the view, we need to know which constraints are in use, in order to hide some information like links to add an item
 		
 		//TODO: what if we want some other layout? config has a list 'layouts'
-		if ( ! $this->_request->isJson()) {
-			include Layout::get();
-		}
+//		if ( ! $this->_request->isJson()) {
+//			include Layout::get();
+//		}
 	}
 	
 	/**
@@ -277,6 +299,11 @@ abstract class Controller extends EntityManager
 	{
 		return $this->_response;
 	}
+
+	final public function view()
+	{
+		return $this->_view;
+	}
 	
 	/**
 	 * If none parameter is given, this returns all alerts set,
@@ -289,15 +316,7 @@ abstract class Controller extends EntityManager
 	 */
 	final public function alert($type = null, $message = null)
 	{
-//		if ($type === null) {
-//			//return $this->_alerts;
-//			return AlertManager::byType();
-//		}
-		
 		if ($message === null) {
-			//return array_filter($this->_alerts, function($alert) use ($type) {
-			//	return $alert->type() === $type;
-			//});
 			return AlertManager::byType($type);
 		}
 		
@@ -314,6 +333,11 @@ abstract class Controller extends EntityManager
 		return array_filter($this->_alerts, function($alert) use ($field) {
 			return $alert->field() === $field;
 		});
+	}
+
+	final public function setDecorator($filename)
+	{
+		$this->_decorator = new Decorator($this, $filename);
 	}
 	
 	/**
@@ -432,19 +456,20 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function render($filename)
 	{
-		$this->renderText($this->_captureView($filename));
+//		$this->renderText($this->_captureView($filename));
+		$this->_view->setFile($filename);
 	}
 
 	/**
 	 * Sets the content to be rendered in the view as the JSON representation
-	 * of the model
+	 * of the array
 	 * @final
-	 * @param Cognosys\Model $model
+	 * @param array $values
 	 * @return void
 	 */
-	final protected function renderJson(Model $model)
+	final protected function renderJson(array $values)
 	{
-		$this->renderText($model->toJson());
+		$this->renderText(json_encode($values));
 	}
 
 	/**
@@ -455,7 +480,13 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function renderText($text)
 	{
-		$this->_view = $text;
+//		$this->_view = $text;
+		$this->_view->setText($text);
+	}
+
+	final protected function disableDecorator()
+	{
+		$this->_decorator = null;
 	}
 	
 	/**
@@ -480,6 +511,7 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function repo($class)
 	{
+		//TODO: throw ApplicationError
 		if ($class instanceof Model) {
 			$class = get_class($class);
 		}
@@ -564,8 +596,8 @@ abstract class Controller extends EntityManager
 	 * @return string
 	 * @deprecated
 	 */
-	private function view()
+	/*private function view()
 	{
 		return $this->_view;
-	}
+	}*/
 }

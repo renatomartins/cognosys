@@ -78,7 +78,7 @@ abstract class Model
 	
 	public function toJson()
 	{
-		//TODO: how to transform this model to json? external library?
+		//LOW: how to transform this model to json? external library?
 		return json_encode($this->toArray());
 	}
 }
