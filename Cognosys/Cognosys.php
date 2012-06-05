@@ -49,8 +49,6 @@ class Cognosys
 		
 		Mail::configure(Config::get('mail'));
 		
-//		Layout::register(LAYOUT, Config::get('layouts'));
-		
 		$request = null;
 		$response = null;
 		
@@ -73,8 +71,7 @@ class Cognosys
 			$controller->setDecorator(Config::get('templates/default'));
 			$controller->run();
 		} catch (Error $e) {
-			//TODO: set a decorator for the error
-			$e->handle($request, $response);//, Config::get('templates/error'));
+			$e->handle($request, $response, Config::get('templates/error'));
 		} catch (Exception $e) {
 			//TODO: handle everything else
 			echo "An unexpected error occured!<br><br>";

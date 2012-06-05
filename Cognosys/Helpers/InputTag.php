@@ -1,6 +1,7 @@
 <?php
 namespace Cognosys\Helpers;
-use Cognosys\Exceptions\ApplicationError;
+use Cognosys\AlertManager,
+	Cognosys\Exceptions\ApplicationError;
 
 /**
  * Helper to render an input element tag
@@ -45,7 +46,7 @@ class InputTag extends HelperTag
 	{
 		$result = "<input {$this->getAttributes()}>";
 		
-		$alerts = $this->controller()->alertField($this->name);
+		$alerts = AlertManager::byField($this->name);
 		foreach ($alerts as $i => $alert) {
 			$result .= $alert->render();
 		}

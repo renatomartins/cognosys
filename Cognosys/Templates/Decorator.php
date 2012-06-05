@@ -1,15 +1,15 @@
 <?php
 namespace Cognosys\Templates;
-use Cognosys\Controller,
-	Cognosys\Template;
+use Cognosys\Template;
 
 class Decorator extends Template
 {
 	private $_name;
 
-	public function __construct(Controller $controller, $filename)
+	public function __construct($request, $response, $filename)
 	{
-		$this->_controller = $controller;
+		$this->_request = $request;
+		$this->_response = $response;
 		$this->_name = $filename;
 		$this->setPath(TEMPLATES);
 		$this->setFile($filename);

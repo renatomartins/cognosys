@@ -9,7 +9,8 @@ abstract class Template
 	protected $_filename;
 	protected $_content;
 	protected $_variables;
-	protected $_controller;
+	protected $_request;
+	protected $_response;
 
 	public function setFile($filename)
 	{
@@ -21,9 +22,10 @@ abstract class Template
 		$this->_variables = $vars;
 	}
 
-	public function render()
+	public function render($view)
 	{
 		$file = $this->_path . $this->_filename;
+		//TODO: should raise a UserError when a URL with an invalid action is requested
 		if ( ! is_readable($file)) {
 			throw new ApplicationError(
 				'Create a file for this view or send some text to the template'
@@ -32,7 +34,7 @@ abstract class Template
 
 		// ugly ugly ugly!!!
 		require_once COGNOSYS . 'Helper.php';
-		Helper::$controller = $this->_controller;
+		Helper::$template = $view;
 
 		if (isset($this->_variables)) {
 			extract($this->_variables);
@@ -45,6 +47,16 @@ abstract class Template
 	public function content()
 	{
 		return $this->_content;
+	}
+
+	public function request()
+	{
+		return $this->_request;
+	}
+
+	public function response()
+	{
+		return $this->_response;
 	}
 
 	protected function setPath($path)

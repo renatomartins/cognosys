@@ -12,6 +12,7 @@ stages:
 #TODO: better structure
 templates:
   default: bootstrap
+  error: error
   options:
     bootstrap:
       css:
@@ -105,8 +106,6 @@ restful:
 cogs:
  - Base
  - User
- - News
- - Samples
 
 # to send emails with notifications
 developers:

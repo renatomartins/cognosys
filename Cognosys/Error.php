@@ -26,14 +26,8 @@ abstract class Error extends Exception
 	 * @abstract
 	 * @param Cognosys\Request $request
 	 * @param Cognosys\Response $response
+	 * @param string $template
 	 * @return void
 	 */
-	abstract public function handle($request, $response);
-	
-	/**
-	 * Returns the content to display to the user
-	 * @abstract
-	 * @return string
-	 */
-	abstract protected function view();
+	abstract public function handle($request, $response, $template);
 }

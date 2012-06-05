@@ -1,6 +1,7 @@
 <?php
 namespace Cognosys\Helpers;
-use Cognosys\Model,
+use Cognosys\AlertManager,
+	Cognosys\Model,
 	Cognosys\Exceptions\ApplicationError,
 	\Closure;
 
@@ -80,7 +81,7 @@ class SelectTag extends HelperTag
 		unset($this->text, $this->value);
 		$result = "<select {$this->getAttributes()}>{$options}</select>";
 		
-		$alerts = $this->controller()->alertField($this->name);
+		$alerts = AlertManager::byField($this->name);
 		foreach ($alerts as $alert) {
 			$result .= $alert->render();
 		}
@@ -92,7 +93,7 @@ class SelectTag extends HelperTag
 	public function option($text, $value = null, $selected = false)
 	{
 		++$this->_opt_count;
-		return OptionTag::create($this->controller(), array(
+		return OptionTag::create($this->template(), array(
 			'id'		=> "{$this->id}-opt{$this->_opt_count}",
 			'selected'	=> $selected,
 			'value'		=> $value

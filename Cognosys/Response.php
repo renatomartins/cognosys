@@ -115,11 +115,10 @@ class Response
 	
 	public function __toString()
 	{
-		return
-			'Cog: ' . $this->_cog . "\n" .
-			'Controller: ' . $this->_controller . "\n" .
-			'Action: ' . $this->_action . "\n" .
-			'Parameters: (' . join(', ', $this->_params) . ')';
+		return "Cog: {$this->_cog}\n"
+			. "Controller: {$this->_controller}\n"
+			. "Action: {$this->_action}\n"
+			. 'Parameters: (' . join(', ', $this->_params) . ')';
 	}
 	
 	/**

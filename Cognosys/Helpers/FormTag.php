@@ -22,7 +22,7 @@ class FormTag extends HelperTag
 			$this->accept_charset = 'utf-8';
 		}
 		if (isset($this->action) === false) {
-			$this->action = $this->controller()->request()->url();
+			$this->action = $this->template()->request()->url();
 		}
 		if (isset($this->method) === false) {
 			$this->method = 'post';
@@ -56,7 +56,7 @@ class FormTag extends HelperTag
 	
 	public function input($type, $field, $params = array())
 	{
-		return InputTag::create($this->controller(), array_merge(array(
+		return InputTag::create($this->template(), array_merge(array(
 			'type'	=> $type,
 			'id'	=> "{$this->id}-{$field}",
 			'name'	=> $field
@@ -90,9 +90,9 @@ class FormTag extends HelperTag
 		), $params));
 	}
 	
-	public function submit($value = 'Submit', $field = 'submit', $params = array())
+	public function submit($value = 'Submit', $params = array())
 	{
-		return $this->input('submit', $field, array_merge(array(
+		return $this->input('submit', 'submit', array_merge(array(
 			'value'	=> $value
 		), $params));
 	}
@@ -135,7 +135,7 @@ class FormTag extends HelperTag
 	 */
 	public function textarea($field, $text = '', $params = array())
 	{
-		return TextareaTag::create($this->controller(), array_merge(array(
+		return TextareaTag::create($this->template(), array_merge(array(
 			'id'	=> "{$this->id}-{$field}",
 			'name'	=> $field
 		), $params), $text);
@@ -143,7 +143,7 @@ class FormTag extends HelperTag
 	
 	public function label($for, $content = null, $params = array())
 	{
-		return LabelTag::create($this->controller(), array_merge(array(
+		return LabelTag::create($this->template(), array_merge(array(
 			'id'	=> "{$this->id}-lbl-{$for}",
 			'for'	=> $for	//TODO: 'for' attribute must match id of the input
 		), $params), $content);
@@ -156,7 +156,7 @@ class FormTag extends HelperTag
 	
 	public function select($field, $content = null, $params = array())
 	{
-		return SelectTag::create($this->controller(), array_merge(array(
+		return SelectTag::create($this->template(), array_merge(array(
 			'id'		=> "{$this->id}-slt-{$field}",
 			'name'		=> $field
 		), $params), $content);

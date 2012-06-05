@@ -10,9 +10,9 @@ use \ReflectionObject,
 abstract class HelperTag
 {
 	/**
-	 * @var Cognosys\Controller
+	 * @var Cognosys\Template
 	 */
-	private $_controller;
+	private $_template;
 	/**
 	 * @var array
 	 */
@@ -38,25 +38,25 @@ abstract class HelperTag
 	protected $title;
 	
 	/**
-	 * Initializes a helper with access to the controller, and if needed, some
+	 * Initializes a helper with access to the template, and if needed, some
 	 * parameters and content,
 	 * validates its properties and returns its HTML representation
 	 * @static
-	 * @param Cognosys\Controller $controller
+	 * @param Cognosys\Template $template
 	 * @param array $params
 	 * @param mixed $content Tipically, a string, an array or a Closure
 	 * @return string
 	 */
-	static public function create($controller, array $params = array(), $content = null)
+	static public function create($template, array $params = array(), $content = null)
 	{
-		$helper = new static($controller, $params, $content);
+		$helper = new static($template, $params, $content);
 		$helper->validate();
 		return $helper->render($content);
 	}
 	
-	private function __construct($controller, $params, $content)
+	private function __construct($template, $params, $content)
 	{
-		$this->_controller = $controller;
+		$this->_template = $template;
 		$this->_params = $params;
 		$this->_content = $content;
 		
@@ -94,11 +94,11 @@ abstract class HelperTag
 	}
 	
 	/**
-	 * @return Cognosys\Controller
+	 * @return Cognosys\Template
 	 */
-	protected function controller()
+	protected function template()
 	{
-		return $this->_controller;
+		return $this->_template;
 	}
 	
 	/**

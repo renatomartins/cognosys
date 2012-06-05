@@ -1,6 +1,7 @@
 <?php
 namespace Cognosys\Helpers;
-use Cognosys\Exceptions\ApplicationError;
+use Cognosys\AlertManager,
+	Cognosys\Exceptions\ApplicationError;
 
 /**
  * Helper to render a textarea tag
@@ -27,7 +28,7 @@ class TextareaTag extends HelperTag
 	{
 		$result = "<textarea {$this->getAttributes()}>{$content}</textarea>";
 		
-		$alerts = $this->controller()->alertField($this->name);
+		$alerts = AlertManager::byField($this->name);
 		foreach ($alerts as $alert) {
 			$result .= $alert->render();
 		}

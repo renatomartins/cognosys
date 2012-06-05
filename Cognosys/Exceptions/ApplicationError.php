@@ -1,6 +1,6 @@
 <?php
 namespace Cognosys\Exceptions;
-use Cognosys\Layout,
+use Cognosys\Templates\View,
 	Cognosys\Config,
 	Cognosys\TextUtil,
 	Cognosys\Mail,
@@ -15,57 +15,53 @@ use Cognosys\Layout,
  */
 class ApplicationError extends Error
 {
-	public function handle($request, $response)
+	public function handle($request, $response, $template)
 	{
 		$now = new DateTime();
 		$time = $now->format(DateTime::RFC850);
-		$trace = TextUtil::tabify($this->getTraceAsString(), 2);
+		$trace = TextUtil::tabify($this->getTraceAsString(), 1);
 		$request = $request
-			? TextUtil::tabify($request, 2)
+			? TextUtil::tabify($request, 1)
 			: '(No request information)';
 		$response = $response
-			? TextUtil::tabify($response, 2)
+			? TextUtil::tabify($response, 1)
 			: '(No response information)';
+		$view = new View($request, $response);
+		$view->setDecorator($template);
 		
-		$content = <<<EOT
+		$this->message = <<<EOT
 {$this->message}
 
-	* Time: {$time}
-	* File: {$this->file}
-	* Line: {$this->line}
-	* Trace:
-		{$trace}
+* Time: {$time}
+* File: {$this->file}
+* Line: {$this->line}
+* Trace:
+	{$trace}
 
-	* Request:
-		{$request}
+* Request:
+	{$request}
 
-	* Response:
-		{$response}
+* Response:
+	{$response}
 EOT;
-		//FIXME: get a view to show the error
-		var_dump($content);die;
+		
 		if (Config::get('development')) {
-			$this->message = nl2br($content);
+			$this->message = "<pre>{$this->message}</pre>";
+			$view->setText($this->message);
 		} else {
-			Mail::send(Config::get('developers'), 'Application error', $content, Mail::PRIORITY_HIGH);
+			Mail::send(
+				Config::get('developers'),
+				'Application error',
+				$this->message,
+				Mail::PRIORITY_HIGH
+			);
+			$view->setText(
+				'An email has been sent to the developers to resolve the issue.'
+				. ' Thank you.'
+			);
 		}
 		
-		include Layout::get();
-	}
-	
-	protected function view()
-	{
-		if (Config::get('development')) {
-			$message = $this->message;
-		} else {
-			$message = "The developer has been contacted to resolve the issue. Thank you.";
-		}
-		
-		return <<<EOT
-<h3>Oops, an error occured</h3>
-<p class="error">
-{$message}
-</p>
-EOT;
+		$view->render();
+		$view->show();
 	}
 }
