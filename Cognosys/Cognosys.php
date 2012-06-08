@@ -75,7 +75,8 @@ class Cognosys
 		} catch (Exception $e) {
 			//TODO: handle everything else
 			echo "An unexpected error occured!<br><br>";
-			var_dump($e);
+			echo "{$e->getMessage()}<br>";
+			var_dump(nl2br($e->getTraceAsString()));
 		}
 	}
 }
