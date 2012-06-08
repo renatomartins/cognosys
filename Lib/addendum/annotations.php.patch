@@ -1,0 +1,26 @@
+330d329
+< 		private static $registeredNamespaces = array();
+370,381d368
+< 		}
+< 		
+< 		/**
+< 		 * Register annotations paths to avoid use @namespace\big\big\path\AnnotationClass
+< 		 * @example
+< 		 * <pre>
+< 		 * Addendum::registerNamespaces('Core\\Annotations', 'App\\Models\\Annotations', [...])
+< 		 * </pre>
+< 		 * then, if you have an AnnotationClass defined inside on of those paths, you could just use @AnnotationClass
+< 		 */
+< 		public static function registerNamespaces() {
+< 			self::$registeredNamespaces = array_merge(self::$registeredNamespaces, func_get_args());
+384,391c371
+< 		public static function resolveClassName($class) {
+< 			foreach (self::$registeredNamespaces as $namespace) {
+< 				if (class_exists($namespace . '\\' . $class)) {
+< 					$class = $namespace . '\\' . $class;
+< 					break;
+< 				}
+< 			}
+< 			
+---
+> 		public static function resolveClassName($class) {
