@@ -42,6 +42,8 @@ abstract class Validator
 			return array();
 		}
 		
-		return self::$_errors;
+		$errors = self::$_errors;
+		self::$_errors = null;
+		return $errors;
 	}
 }

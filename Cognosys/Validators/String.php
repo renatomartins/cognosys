@@ -44,6 +44,23 @@ class String extends Validator
 			self::set($field, 'String does not equals required value');
 		}
 	}
+
+	/**
+	 * Checks if a string matches a given pattern
+	 * @static
+	 * @param mixed $value
+	 * @param string $pattern A regex pattern
+	 * @param string $field
+	 * @return void
+	 */
+	static public function regex(&$value, $pattern, $field = null)
+	{
+		$value = self::_validate($value, $field);
+
+		if ( ! preg_match($pattern, $value)) {
+			self::set($field, 'String does not match required pattern');
+		}
+	}
 	
 	/**
 	 * Checks if the length of a string if smaller than a maximum
