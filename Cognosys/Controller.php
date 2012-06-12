@@ -355,14 +355,14 @@ abstract class Controller extends EntityManager
 		
 		$metadata = $this->getClassMetadata(get_class($model));
 		foreach ($metadata->associationMappings as $assoc) {
-			if (is_int($model->$assoc['fieldName']())
-				&& $model->$assoc['fieldName']() > 0)
-			{
+			$method = TextUtil::camelize($assoc['fieldName']);
+			if (is_numeric($model->$method()) && $model->$method() > 0) {
 				// transform the identifier to the entity
-				$model->$assoc['fieldName']($this->getReference(
+				$model->$method($this->getReference(
 					$assoc['targetEntity'],
-					$model->$assoc['fieldName']()
+					$model->$method()
 				));
+				$this->persist($model->$method());
 			}
 		}
 		
