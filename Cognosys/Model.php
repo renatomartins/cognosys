@@ -45,14 +45,7 @@ abstract class Model
 	static public function create(array $properties = array())
 	{
 		$instance = new static;
-		foreach ($properties as $name => $value) {
-			// use function property_exists and sets the value
-			if (property_exists($instance, $name)) {
-				$instance->$name = $value;
-			}
-		}
-		
-		return $instance;
+		return $instance->update($properties);
 	}
 	
 	/**
@@ -64,6 +57,22 @@ abstract class Model
 	static public function classname()
 	{
 		return get_called_class();
+	}
+
+	/**
+	 * Set properties of the model
+	 * @param array $properties
+	 * @return Cognosys\Model
+	 */
+	public function update(array $properties = array())
+	{
+		foreach ($properties as $name => $value) {
+			// use function property_exists and sets the value
+			if (property_exists($this, $name)) {
+				$this->$name = $value;
+			}
+		}
+		return $this;
 	}
 	
 	/**
