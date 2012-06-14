@@ -22,6 +22,11 @@ abstract class Template
 		$this->_variables = $vars;
 	}
 
+	public function getVariables()
+	{
+		return $this->_variables;
+	}
+
 	public function render($view)
 	{
 		$file = $this->_path . $this->_filename;

@@ -33,9 +33,34 @@ function alerts()
 	}
 }
 
+function url($url = '')
+{
+	if (strpos($url, 'http://') === 0) {
+		return $url;
+	} elseif ( ! empty($url) && $url[0] === '/') {
+		return Helper::$template->request()->host() . $url;
+	} else {
+		return Helper::$template->request()->host() . '/'
+			. Helper::$template->response()->originalController() . '/'
+			. $url;
+	}
+}
+
 function view()
 {
 	print Helper::$template->content();
+}
+
+function inject($filename)
+{
+	$file = COGS . Helper::$template->response()->cog()
+		. '/Views/' . Helper::$template->response()->originalController()
+		. '/' . $filename . '.php';
+
+	if (is_readable($file)) {
+		extract(Helper::$template->getVariables());
+		include $file;
+	}
 }
 
 //TODO: load css files
