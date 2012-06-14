@@ -132,7 +132,6 @@ abstract class Controller extends EntityManager
 	 */
 	final public function run()
 	{
-//		$view = TextUtil::dasherize($this->_response->action());
 		$action = $this->_response->action() . 'Action';
 		$params = $this->_response->params();
 
@@ -167,17 +166,7 @@ abstract class Controller extends EntityManager
 		$this->_view->render();
 		$this->_view->show();
 
-//		if ( ! isset($this->_view)) {
-//			$this->render($view);
-//		}
-
-		
 		//FIXME: in the view, we need to know which constraints are in use, in order to hide some information like links to add an item
-		
-		//TODO: what if we want some other layout? config has a list 'layouts'
-//		if ( ! $this->_request->isJson()) {
-//			include Layout::get();
-//		}
 	}
 	
 	/**
@@ -384,13 +373,20 @@ abstract class Controller extends EntityManager
 	 * Stops this request sending a header to the browser requesting a redirect
 	 * Before redirection the url passes in $this->url($url)
 	 * Without parameter, redirect to the index action
+	 * If type and message are set, creates an alert message
 	 * @final
 	 * @param string $url
+	 * @param int $type
+	 * @param string $message
 	 * @return void
 	 * @see url()
 	 */
-	final protected function redirect($url = '')
+	final protected function redirect($url = '', $type = null, $message = null)
 	{
+		if ( ! is_null($type) && ! is_null($message)) {
+			$this->alert($type, $message);
+		}
+
 		header('Location: ' . $this->url($url));
 		die;
 	}
@@ -457,7 +453,6 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function render($filename)
 	{
-//		$this->renderText($this->_captureView($filename));
 		$this->_view->setFile($filename);
 	}
 
@@ -481,27 +476,18 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function renderText($text)
 	{
-//		$this->_view = $text;
 		$this->_view->setText($text);
 	}
 
+	/**
+	 * Disables the decorator rendering
+	 * @final
+	 * @return void
+	 */
 	final protected function disableDecorator()
 	{
 		$this->_decorator = null;
 	}
-	
-	/**
-	 * Prints the content of a partial, must be called only from a view
-	 * @final
-	 * @param string $filename
-	 * @return void
-	 * @see Controller::render($filename)
-	 * @deprecated
-	 */
-	/*final protected function inject($filename)
-	{
-		print $this->_captureView('_' . $filename);
-	}*/
 	
 	/**
 	 * Given the classname of an entity or the entity itself,
