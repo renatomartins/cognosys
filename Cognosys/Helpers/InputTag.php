@@ -48,7 +48,8 @@ class InputTag extends HelperTag
 		
 		$alerts = AlertManager::byField($this->name);
 		foreach ($alerts as $i => $alert) {
-			$result .= $alert->render();
+			//$result .= $alert->render();
+			$result .= "<span class='help-inline'>{$alert->message()}</span>";
 		}
 		
 		return $result;
