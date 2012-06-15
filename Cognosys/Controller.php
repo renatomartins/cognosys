@@ -161,7 +161,13 @@ abstract class Controller extends EntityManager
 		// get only variables set in the controller instance
 		$vars = array_diff_key(get_object_vars($this), $vars);
 		$this->_view->setVariables($vars);
-		$this->_view->setDecorator($this->_decorator);
+
+		if ($this->_request->json() || $this->_request->ajax()) {
+			$this->disableDecorator();
+		}
+		if ( ! is_null($this->_decorator)) {
+			$this->_view->setDecorator($this->_decorator);
+		}
 
 		$this->_view->render();
 		$this->_view->show();
