@@ -25,5 +25,11 @@ var cognosys = {
 			$(modal_start + modal_header + modal_body + modal_footer + modal_end).appendTo(document.body)
 			$('#'+id).modal()
 		}
+	},
+	hash: {
+		get: function() {
+			var index = window.location.href.indexOf('#')
+			return (index == -1 ? '' : window.location.href.substr(index+1))
+		}
 	}
 }
