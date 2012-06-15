@@ -119,12 +119,20 @@ class Request
 	}
 
 	/**
-	 * Wether the accept type of the request is JSON
+	 * Whether the accept type of the request is JSON
 	 * @return bool
 	 */
-	public function isJson()
+	public function json()
 	{
 		return $this->_accept === 'json';
+	}
+
+	/**
+	 * Whether this URL's request started with /ajax/ or not
+	 */
+	public function ajax()
+	{
+		return $this->_ajax;
 	}
 	
 	/**
@@ -205,7 +213,10 @@ class Request
 		return
 			'Method: ' . $this->_method . "\n" .
 			'Protocol: ' . $this->_protocol . "\n" .
+			'Accept: ' . $this->_accept . "\n" .
+			'Ajax: ' . ($this->_ajax?'true':'false') . "\n" .
 			'Host: ' . $this->_host . "\n" .
+			'Subdomain: ' . $this->_subdomain . "\n" .
 			'Path: ' . $this->_path . "\n" .
 			'Query: ' . join(', ', $this->_query);
 	}
