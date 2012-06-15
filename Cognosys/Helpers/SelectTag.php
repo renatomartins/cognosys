@@ -72,8 +72,7 @@ class SelectTag extends HelperTag
 				
 				$params = $this->params();
 				$selected = isset($params['selected'])
-					? $params['selected']
-					: false;
+					&& $params['selected'] == $value;
 				$options .= $this->option($text, $value, $selected);
 			}
 		}

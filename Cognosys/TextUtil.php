@@ -69,7 +69,17 @@ class TextUtil
 	{
 		return ucfirst(str_replace(array('-', '_'), ' ', $str));
 	}
-	
+
+	/**
+	 * Dasherize and remove spaces
+	 * @param string $str
+	 * @return string
+	 */
+	static public function dehumanize($str)
+	{
+		return str_replace(' ', '', self::dasherize($str));
+	}
+
 	/**
 	 * Insert a certain amount of tabs in each line, except the first
 	 * @param string $str
