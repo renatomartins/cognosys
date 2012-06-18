@@ -212,7 +212,7 @@ abstract class Controller extends EntityManager
 	 */
 	final public function isAjax()
 	{
-		return $this->_request->isAjax();
+		return $this->_request->ajax();
 	}
 	
 	/**
@@ -222,7 +222,7 @@ abstract class Controller extends EntityManager
 	 */
 	final public function isJson()
 	{
-		return $this->_request->isJson();
+		return $this->_request->json();
 	}
 	
 	/**
@@ -334,6 +334,16 @@ abstract class Controller extends EntityManager
 	final public function setDecorator($filename)
 	{
 		$this->_decorator = $filename;
+	}
+
+	/**
+	 * Disables the decorator rendering
+	 * @final
+	 * @return void
+	 */
+	final public function disableDecorator()
+	{
+		$this->_decorator = null;
 	}
 	
 	/**
@@ -486,16 +496,6 @@ abstract class Controller extends EntityManager
 	final protected function renderText($text)
 	{
 		$this->_view->setText($text);
-	}
-
-	/**
-	 * Disables the decorator rendering
-	 * @final
-	 * @return void
-	 */
-	final protected function disableDecorator()
-	{
-		$this->_decorator = null;
 	}
 	
 	/**
