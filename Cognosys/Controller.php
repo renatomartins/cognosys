@@ -406,7 +406,10 @@ abstract class Controller extends EntityManager
 	 */
 	final protected function url($url = '')
 	{
-		if (strpos($url, 'http://') === 0) {
+		if (strpos($url, 'http://') === 0
+			|| strpos($url, 'https://') === 0
+			|| strpos($url, '//') === 0
+		) {
 			return $url;
 		} elseif ( ! empty($url) && $url[0] === '/') {
 			return $this->_request->host() . $url;
