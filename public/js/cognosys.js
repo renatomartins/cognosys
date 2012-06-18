@@ -1,6 +1,36 @@
 var cognosys = {
 	init: function() {
+		this.ajax.init()
 		this.confirm.init()
+
+		this.tooltips()
+		this.tabs()
+	},
+	ajax: {
+		init: function() {
+			var ajax = this
+			$('ajax').on('load', function() {
+				var $this = $(this)
+				ajax.send($this.attr('href'), function() {
+					$this.html('<div class="center progress progress-warning progress-striped active" style="width:80px"><div class="bar" style="width:100%">loading...</div></div>')
+				}, function(data) {
+					$this.html(data)
+					$this.removeAttr('load')
+					$this.attr('loaded', '')
+				}, function() {
+					$this.html('There was an error in the request')
+				})
+			})
+			$('ajax[load]').trigger('load')
+		},
+		activate: function(parent) {
+			$(parent).children('ajax').not('[loaded]').each(function() {
+				$(this).trigger('load')
+			})
+		},
+		send: function(url, before, success, error) {
+			$.ajax({url:url,beforeSend:before,success:success,error:error})
+		}
 	},
 	alert: function(messages, type) {
 		humane.create({timeout: -1, clickToClose: true})
@@ -8,7 +38,7 @@ var cognosys = {
 	},
 	confirm: {
 		init: function() {
-			$('a[rel="confirm"]').each(function(){
+			$('a[confirm]').each(function(){
 				$(this).click(function(e) {
 					e.preventDefault();
 					cognosys.confirm.popup($(this).attr('href'), $(this).attr('confirm'))
@@ -17,12 +47,17 @@ var cognosys = {
 		},
 		popup: function(url, text) {
 			var id = 'modal-confirm'
-			var modal_start = '<div id="'+id+'" class="modal hide fade">'
-			var modal_header = '<div class="modal-header"><h3>Confirm</h3></div>'
-			var modal_body = '<div class="modal-body">'+text+'</div>'
-			var modal_footer = '<div class="modal-footer"><a class="btn btn-primary" href="'+url+'">OK</a><a class="btn" data-dismiss="modal">Cancel</a></div>'
-			var modal_end = '</div>'
-			$(modal_start + modal_header + modal_body + modal_footer + modal_end).appendTo(document.body)
+			var m_start = '<div id="'+id+'" class="modal hide fade">'
+			var m_header = '<div class="modal-header"><h3>Confirm</h3></div>'
+			var m_body = '<div class="modal-body">'+text+'</div>'
+			var m_footer = '<div class="modal-footer"><a class="btn btn-primary" href="'+url+'">OK</a><a class="btn" data-dismiss="modal">Cancel</a></div>'
+			var m_end = '</div>'
+
+			if ($('#'+id).length) {
+				$('#'+id).html(m_header + m_body + m_footer)
+			} else {
+				$(m_start + m_header + m_body + m_footer + m_end).appendTo(document.body)
+			}
 			$('#'+id).modal()
 		}
 	},
@@ -31,5 +66,13 @@ var cognosys = {
 			var index = window.location.href.indexOf('#')
 			return (index == -1 ? '' : window.location.href.substr(index+1))
 		}
+	},
+	tabs: function() {
+		$('[data-toggle="tab"]').on('shown', function() {
+			cognosys.ajax.activate($($(this).attr('href')))
+		})
+	},
+	tooltips: function() {
+		$('a[rel="tooltip"]').tooltip({animation: false})
 	}
 }

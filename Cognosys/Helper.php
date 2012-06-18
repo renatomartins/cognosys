@@ -33,17 +33,25 @@ function alerts()
 	}
 }
 
-function url($url = '')
+function url($url = '', $ajax = false)
 {
+	$ajax = $ajax ? '/ajax' : '';
 	if (strpos($url, 'http://') === 0 || strpos($url, '//') === 0) {
 		return $url;
 	} elseif ( ! empty($url) && $url[0] === '/') {
-		return Helper::$template->request()->host() . $url;
+		return Helper::$template->request()->host() . $ajax . $url;
 	} else {
-		return Helper::$template->request()->host() . '/'
+		return Helper::$template->request()->host() . $ajax . '/'
 			. Helper::$template->response()->originalController() . '/'
 			. $url;
 	}
+}
+
+function ajax($url = '', $load = false)
+{
+	$url = url($url, true);
+	$load = $load ? ' load' : '';
+	return "<ajax href='{$url}'{$load}></ajax>";
 }
 
 function view()
