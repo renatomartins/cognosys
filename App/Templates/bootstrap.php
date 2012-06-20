@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/css/bootstrap.css">
     <link rel="stylesheet" href="/css/humane-jackedup.css">
     <link rel="stylesheet" href="/css/bootstrap-responsive.css">
+    <link rel="stylesheet" href="/css/datepicker.css">
     <link rel="stylesheet" href="/css/app.css">
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -107,6 +108,7 @@
     <script src="/js/bootstrap/bootstrap-collapse.js"></script>
     <script src="/js/bootstrap/bootstrap-carousel.js"></script>
     <script src="/js/bootstrap/bootstrap-typeahead.js"></script>
+    <script src="/js/bootstrap/bootstrap-datepicker.js"></script>
     <script src="/js/humane-3.0.0.js"></script>
     <script src="/js/cognosys.js"></script>
     <script src="/js/app.js"></script>

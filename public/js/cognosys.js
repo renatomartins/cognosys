@@ -5,6 +5,7 @@ var cognosys = {
 
 		this.tooltips()
 		this.tabs()
+		this.datepicker()
 	},
 	ajax: {
 		init: function() {
@@ -17,8 +18,9 @@ var cognosys = {
 					$this.html(data)
 					$this.removeAttr('load')
 					$this.attr('loaded', '')
+					//TODO: how to execute all inits in this content?
 				}, function() {
-					$this.html('There was an error in the request')
+					$this.html('<div class="center">There was an error in the request</div>')
 				})
 			})
 			$('ajax[load]').trigger('load')
@@ -61,6 +63,13 @@ var cognosys = {
 			$('#'+id).modal()
 		}
 	},
+	datepicker: function() {
+		$('.date').datepicker().on('changeDate', function(e) {
+			$this = $(this)
+			$this.children(':first').html($this.data('date'))
+			$this.datepicker('hide')
+		})
+	},
 	hash: {
 		get: function() {
 			var index = window.location.href.indexOf('#')
@@ -73,6 +82,6 @@ var cognosys = {
 		})
 	},
 	tooltips: function() {
-		$('a[rel="tooltip"]').tooltip({animation: false})
+		$('a[title]').tooltip({animation: false})
 	}
 }
