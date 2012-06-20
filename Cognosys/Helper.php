@@ -2,7 +2,9 @@
 use Cognosys\AlertManager,
 	Cognosys\Config,
 	Cognosys\Templates\Decorator,
-	Cognosys\Helpers\FormTag;
+	Cognosys\Helpers\FormTag,
+	Cognosys\Helpers\InputTag,
+	\DateTime;
 
 // in order to have access to controller instance in the functions above
 class Helper
@@ -31,6 +33,17 @@ function alerts()
 
 		print $result . "'], '{$type}')\n";
 	}
+}
+
+function bool($value)
+{
+	$which = $value ? 'ok' : 'remove';
+	return "<div class='center'><i class='icon-{$which}'></i></div>";
+}
+
+function datetime($value, $format = 'Y-m-d')
+{
+	return $value instanceof DateTime ? $value->format($format) : '';
 }
 
 function url($url = '', $ajax = false)
@@ -95,5 +108,11 @@ function form($content, array $params = array())
 	return FormTag::create(Helper::$template, $params, $content);
 }
 
-//TODO: other functions to render other tags
-//TODO: call custom renderers, like gallery or dates renderers
+function input($id, $value = '', array $params = array())
+{
+	return InputTag::create(Helper::$template, array_merge(array(
+		'type'	=> 'text',
+		'id'	=> $id,
+		'value'	=> $value
+	), $params));
+}
