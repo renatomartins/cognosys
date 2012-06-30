@@ -1,6 +1,6 @@
 var cognosys = {
 	init: function() {
-		this.ajax.init()
+		this.ajax.init('body')
 		this.confirm.init()
 
 		this.tooltips()
@@ -8,30 +8,33 @@ var cognosys = {
 		this.datepicker()
 	},
 	ajax: {
-		init: function() {
+		init: function(selector) {
 			var ajax = this
-			$('ajax').on('load', function() {
+			$(selector).find('ajax').on('load', function() {
 				var $this = $(this)
+				var type = $this.attr('type')
 				ajax.send($this.attr('href'), function() {
 					$this.html('<div class="center progress progress-warning progress-striped active" style="width:80px"><div class="bar" style="width:100%">loading...</div></div>')
 				}, function(data) {
-					$this.html(data)
+					(type == undefined) ? $this.html(data) : $this.text(data)
 					$this.removeAttr('load')
 					$this.attr('loaded', '')
-					//TODO: how to execute all inits in this content?
+					// init ajax tags in new content
+					ajax.init($this)
 				}, function() {
 					$this.html('<div class="center">There was an error in the request</div>')
-				})
+				}, $this.attr('type'))
 			})
-			$('ajax[load]').trigger('load')
+			$(selector).find('ajax[load]').trigger('load')
 		},
 		activate: function(parent) {
 			$(parent).children('ajax').not('[loaded]').each(function() {
 				$(this).trigger('load')
 			})
 		},
-		send: function(url, before, success, error) {
-			$.ajax({url:url,beforeSend:before,success:success,error:error})
+		send: function(url, before, success, error, type) {
+			type = (type == null || type == undefined) ? 'text' : type
+			$.ajax({url:url,beforeSend:before,success:success,error:error,dataType:type})
 		}
 	},
 	alert: function(messages, type) {
@@ -66,7 +69,7 @@ var cognosys = {
 	datepicker: function() {
 		$('.date').datepicker().on('changeDate', function(e) {
 			$this = $(this)
-			$this.children(':first').html($this.data('date'))
+			$this.children(':first').val($this.data('date'))
 			$this.datepicker('hide')
 		})
 	},

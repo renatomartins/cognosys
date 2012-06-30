@@ -147,11 +147,11 @@ abstract class Controller extends EntityManager
 					'You do not have permission to access this action'
 				);
 			}
-			
-			if (count($params) < $refl->getNumberOfParameters()) {
+
+			if (count($params) < $refl->getNumberOfRequiredParameters()) {
 				throw new UserError('The URL misses some parameters');
 			}
-			
+
 			call_user_func_array(array($this, $action), $params);
 			$this->flush();
 			// closes the database connection because only a controller can access it
