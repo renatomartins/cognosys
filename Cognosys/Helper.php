@@ -4,6 +4,7 @@ use Cognosys\AlertManager,
 	Cognosys\Templates\Decorator,
 	Cognosys\Helpers\FormTag,
 	Cognosys\Helpers\InputTag,
+	Cognosys\Helpers\CalendarTag,
 	\DateTime;
 
 // in order to have access to controller instance in the functions above
@@ -60,11 +61,17 @@ function url($url = '', $ajax = false)
 	}
 }
 
-function ajax($url = '', $load = false)
+function ajax($url = '', $load = false, $type = null)
 {
 	$url = url($url, true);
 	$load = $load ? ' load' : '';
-	return "<ajax href='{$url}'{$load}></ajax>";
+	$type = is_null($type) ? '' : " type='{$type}'";
+	return "<ajax href='{$url}'{$load}{$type}></ajax>";
+}
+
+function json($url)
+{
+	return ajax($url, true, 'json');
 }
 
 function view()
@@ -114,5 +121,14 @@ function input($id, $value = '', array $params = array())
 		'type'	=> 'text',
 		'id'	=> $id,
 		'value'	=> $value
+	), $params));
+}
+
+function calendar($id, $value = '', $wrapper = 'div', array $params = array())
+{
+	return CalendarTag::create(Helper::$template, array_merge(array(
+		'id'		=> $id,
+		'value'		=> $value,
+		'wrapper'	=> $wrapper
 	), $params));
 }

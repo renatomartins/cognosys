@@ -17,6 +17,7 @@ class InputTag extends HelperTag
 	
 	protected function validate()
 	{
+		//FIXME: when value is updated from true to false, model doesn't know about the change
 		if (isset($this->checked) && ! (bool)$this->checked) {
 			unset($this->checked);
 		}

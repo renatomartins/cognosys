@@ -18,9 +18,14 @@ class Time extends Validator
 	static public function date(&$value, $field = null)
 	{
 		$value = self::_validate($value, $field);
+	}
+
+	static public function required(&$value, $field = null)
+	{
+		self::_validate($value, $field);
 
 		if ( ! $value instanceof DateTime) {
-			
+			self::set($field, 'Date is not valid');
 		}
 	}
 	
@@ -36,7 +41,6 @@ class Time extends Validator
 			return $value;
 		}
 		
-		self::set($field, 'Date is not valid');
 		return null;
 	}
 }

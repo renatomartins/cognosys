@@ -161,6 +161,14 @@ class FormTag extends HelperTag
 			'name'		=> $field
 		), $params), $content);
 	}
+
+	public function calendar($field, $value, array $params = array())
+	{
+		return CalendarTag::create($this->template(), array_merge(array(
+			'id'	=> "{$this->id}-cal-{$field}",
+			'name'	=> $field
+		), $params));
+	}
 	
 	/*
 	public function custom($field, )
