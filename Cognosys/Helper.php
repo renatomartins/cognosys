@@ -7,7 +7,7 @@ use Cognosys\AlertManager,
 	Cognosys\Helpers\CalendarTag,
 	\DateTime;
 
-// in order to have access to controller instance in the functions above
+// in order to have access to controller instance in the functions below
 class Helper
 {
 	//static public $controller;
@@ -44,7 +44,7 @@ function bool($value)
 
 function datetime($value, $format = 'Y-m-d')
 {
-	return $value instanceof DateTime ? $value->format($format) : '';
+	return $value instanceof DateTime ? $value->format($format) : $value;
 }
 
 function url($url = '', $ajax = false)
@@ -92,22 +92,48 @@ function inject($filename)
 }
 
 //TODO: load css files
-function loadCss()
+//TODO: get from config the root for css files
+function loadCssFiles()
 {
-	//Helper::$controller->view()->
+	$files = Helper::$template->getCssFiles();
+	$links = '';
+	foreach ($files as $file) {
+		$links .= "<link rel='stylesheet' href='/css/{$file}'>\n";
+	}
+	return $links;
 }
 
-//TODO: load javascript files, $template instead of $controller
-function loadJs()
+//TODO: load javascript files in config
+//TODO: get from config the root for js files
+function loadJsFiles()
 {
-	$decorator = Helper::$controller->view()->getDecorator();
-	if ( ! $decorator instanceof Decorator) {
-		return;
+	$files = Helper::$template->getJsFiles();
+	$scripts = '';
+	foreach ($files as $file) {
+		$scripts .= "<script src='/js/{$file}'></script>\n";
 	}
+	return $scripts;
+}
 
-	foreach (Config::get("templates/options/{$decorator->name()}/js") as $js) {
-		
-	}
+function loadJsSnippets()
+{
+	$snippets = Helper::$template->getJsSnippets();
+	return implode("\n", $snippets) . "\n";
+}
+
+function cssFile($filename)
+{
+	Helper::$template->addCssFile($filename);
+}
+
+function jsFile($filename)
+{
+	Helper::$template->addJsFile($filename);
+}
+
+function jsSnippet($snippet)
+{
+	Helper::$template->addJsSnippet($snippet);
 }
 
 function form($content, array $params = array())

@@ -11,6 +11,9 @@ abstract class Template
 	protected $_variables;
 	protected $_request;
 	protected $_response;
+	private $_css_files;
+	private $_js_files;
+	private $_js_snippets;
 
 	public function setFile($filename)
 	{
@@ -25,6 +28,36 @@ abstract class Template
 	public function getVariables()
 	{
 		return $this->_variables;
+	}
+
+	public function getCssFiles()
+	{
+		return $this->_css_files;
+	}
+
+	public function getJsFiles()
+	{
+		return $this->_js_files;
+	}
+
+	public function getJsSnippets()
+	{
+		return $this->_js_snippets;
+	}
+
+	public function addCssFile($filename)
+	{
+		$this->_css_files[] = $filename;
+	}
+
+	public function addJsFile($filename)
+	{
+		$this->_js_files[] = $filename;
+	}
+
+	public function addJsSnippet($snippet)
+	{
+		$this->_js_snippets[] = $snippet;
 	}
 
 	public function render($view)

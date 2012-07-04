@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="/css/datepicker.css">
     <link rel="stylesheet" href="/css/app.css">
+    <?=loadCssFiles()?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -112,10 +113,12 @@
     <script src="/js/humane-3.0.0.js"></script>
     <script src="/js/cognosys.js"></script>
     <script src="/js/app.js"></script>
+    <?=loadJsFiles()?>
     <script>
       onload = function(){
         cognosys.init()
         <?=alerts()?>
+        <?=loadJsSnippets()?>
       }
     </script>
   </body>
