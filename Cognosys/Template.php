@@ -12,6 +12,7 @@ abstract class Template
 	protected $_request;
 	protected $_response;
 	private $_css_files;
+	private $_css_snippets;
 	private $_js_files;
 	private $_js_snippets;
 
@@ -32,22 +33,32 @@ abstract class Template
 
 	public function getCssFiles()
 	{
-		return $this->_css_files;
+		return isset($this->_css_files) ? $this->_css_files : array();
+	}
+
+	public function getCssSnippets()
+	{
+		return isset($this->_css_snippets) ? $this->_css_snippets : array();
 	}
 
 	public function getJsFiles()
 	{
-		return $this->_js_files;
+		return isset($this->_js_files) ? $this->_js_files : array();
 	}
 
 	public function getJsSnippets()
 	{
-		return $this->_js_snippets;
+		return isset($this->_js_snippets) ? $this->_js_snippets : array();
 	}
 
 	public function addCssFile($filename)
 	{
 		$this->_css_files[] = $filename;
+	}
+
+	public function addCssSnippet($snippet)
+	{
+		$this->_css_snippets[] = $snippet;
 	}
 
 	public function addJsFile($filename)
@@ -72,7 +83,7 @@ abstract class Template
 
 		// ugly ugly ugly!!!
 		require_once COGNOSYS . 'Helper.php';
-		Helper::$template = $view;
+		Helper::addTemplate($view);
 
 		if (isset($this->_variables)) {
 			extract($this->_variables);
@@ -80,6 +91,8 @@ abstract class Template
 		ob_start();
 		include $file;
 		$this->_content = ob_get_clean();
+		
+		Helper::removeTemplate();
 	}
 
 	public function content()

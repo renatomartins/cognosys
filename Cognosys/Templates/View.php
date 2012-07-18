@@ -1,6 +1,7 @@
 <?php
 namespace Cognosys\Templates;
-use Cognosys\Response,
+use Cognosys\Config,
+	Cognosys\Response,
 	Cognosys\Template,
 	Cognosys\TextUtil;
 
@@ -9,19 +10,32 @@ class View extends Template
 	private $_decorator;
 	private $_text;
 
-	public function __construct($request, $response)
+	static public function forController($request, $response)
 	{
-		$this->_request = $request;
-		$this->_response = $response;
+		$view = new static;
+		$view->_request = $request;
+		$view->_response = $response;
 
 		if ($response instanceof Response) {
 			$cog = $response->cog();
 			$controller = $response->originalController();
 			$action = $response->action();
 
-			$this->setPath(COGS . "{$cog}/Views/{$controller}/");
-			$this->setFile(TextUtil::dasherize($action));
+			$view->setPath(COGS . "{$cog}/Views/{$controller}/");
+			$view->setFile(TextUtil::dasherize($action));
 		}
+		return $view;
+	}
+
+	static public function forWidget($cogname, $widget_dashed)
+	{
+		$template = Config::get('templates/default');
+
+		$view = new static;
+		$view->setPath(COGS . "{$cogname}/Widgets/{$template}/");
+		$view->setFile($widget_dashed);
+
+		return $view;
 	}
 
 	public function getDecorator()

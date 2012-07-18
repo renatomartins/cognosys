@@ -114,7 +114,7 @@ abstract class Controller extends EntityManager
 		$instance->_request = $request;
 		$instance->_response = $response;
 		$instance->_session = $session;
-		$instance->_view = new View($request, $response);
+		$instance->_view = View::forController($request, $response);
 		$instance->_user = $instance->repo(User::classname())->find(
 			$session->get('user', false)
 		);
@@ -147,11 +147,11 @@ abstract class Controller extends EntityManager
 					'You do not have permission to access this action'
 				);
 			}
-
+			
 			if (count($params) < $refl->getNumberOfRequiredParameters()) {
 				throw new UserError('The URL misses some parameters');
 			}
-
+			
 			call_user_func_array(array($this, $action), $params);
 			$this->flush();
 			// closes the database connection because only a controller can access it
@@ -270,7 +270,7 @@ abstract class Controller extends EntityManager
 	 * @final
 	 * @return Cognosys\Model
 	 */
-	final public function getUser()
+	final public function user()
 	{
 		return $this->_user;
 	}
