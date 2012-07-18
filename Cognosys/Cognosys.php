@@ -68,6 +68,7 @@ class Cognosys
 				$response,
 				Config::get('database')
 			);
+			Widget::controller($controller); // allow widgets to access controller
 			$controller->setDecorator(Config::get('templates/default'));
 			$controller->run();
 		} catch (Error $e) {

@@ -1,21 +1,36 @@
 <?php
 use Cognosys\AlertManager,
 	Cognosys\Config,
+	Cognosys\Session,
+	Cognosys\TextUtil,
+	Cognosys\Widget,
 	Cognosys\Templates\Decorator,
 	Cognosys\Helpers\FormTag,
 	Cognosys\Helpers\InputTag,
 	Cognosys\Helpers\CalendarTag,
 	\DateTime;
 
-// in order to have access to controller instance in the functions below
+// in order to have access to template instance in the functions below
 class Helper
 {
-	//static public $controller;
-	static public $template;
+	static private $_templates = array();
+
+	static public function template()
+	{
+		return end(self::$_templates);
+	}
+
+	static public function addTemplate($template)
+	{
+		self::$_templates[] = $template;
+	}
+
+	static public function removeTemplate()
+	{
+		array_pop(self::$_templates);
+	}
 }
 
-//$helper = new Helper();
-//var_dump('alo', $helper);
 
 function alerts()
 {
@@ -53,10 +68,10 @@ function url($url = '', $ajax = false)
 	if (strpos($url, 'http://') === 0 || strpos($url, '//') === 0) {
 		return $url;
 	} elseif ( ! empty($url) && $url[0] === '/') {
-		return Helper::$template->request()->host() . $ajax . $url;
+		return Helper::template()->request()->host() . $ajax . $url;
 	} else {
-		return Helper::$template->request()->host() . $ajax . '/'
-			. Helper::$template->response()->originalController() . '/'
+		return Helper::template()->request()->host() . $ajax . '/'
+			. Helper::template()->response()->originalController() . '/'
 			. $url;
 	}
 }
@@ -76,26 +91,26 @@ function json($url)
 
 function view()
 {
-	print Helper::$template->content();
+	print Helper::template()->content();
 }
 
 function inject($filename)
 {
-	$file = COGS . Helper::$template->response()->cog()
-		. '/Views/' . Helper::$template->response()->originalController()
+	$file = COGS . Helper::template()->response()->cog()
+		. '/Views/' . Helper::template()->response()->originalController()
 		. '/' . $filename . '.php';
 
 	if (is_readable($file)) {
-		extract(Helper::$template->getVariables());
+		extract(Helper::template()->getVariables());
 		include $file;
 	}
 }
 
-//TODO: load css files
+//TODO: load css files in config
 //TODO: get from config the root for css files
 function loadCssFiles()
 {
-	$files = Helper::$template->getCssFiles();
+	$files = Helper::template()->getCssFiles();
 	$links = '';
 	foreach ($files as $file) {
 		$links .= "<link rel='stylesheet' href='/css/{$file}'>\n";
@@ -103,11 +118,17 @@ function loadCssFiles()
 	return $links;
 }
 
+function loadCssSnippets()
+{
+	$snippets = Helper::template()->getCssSnippets();
+	return join("\n", $snippets) . "\n";
+}
+
 //TODO: load javascript files in config
 //TODO: get from config the root for js files
 function loadJsFiles()
 {
-	$files = Helper::$template->getJsFiles();
+	$files = Helper::template()->getJsFiles();
 	$scripts = '';
 	foreach ($files as $file) {
 		$scripts .= "<script src='/js/{$file}'></script>\n";
@@ -117,33 +138,44 @@ function loadJsFiles()
 
 function loadJsSnippets()
 {
-	$snippets = Helper::$template->getJsSnippets();
-	return implode("\n", $snippets) . "\n";
+	$snippets = Helper::template()->getJsSnippets();
+	return join("\n", $snippets) . "\n";
 }
 
 function cssFile($filename)
 {
-	Helper::$template->addCssFile($filename);
+	Helper::template()->addCssFile($filename);
+}
+
+function cssSnippet($snippet)
+{
+	Helper::template()->addCssSnippet($snippet);
 }
 
 function jsFile($filename)
 {
-	Helper::$template->addJsFile($filename);
+	Helper::template()->addJsFile($filename);
 }
 
 function jsSnippet($snippet)
 {
-	Helper::$template->addJsSnippet($snippet);
+	Helper::template()->addJsSnippet($snippet);
+}
+
+function widget($cog_dashed, $widget_dashed, $params = array())
+{
+	$widget = Widget::factory($cog_dashed, $widget_dashed, $params);
+	return $widget->render();
 }
 
 function form($content, array $params = array())
 {
-	return FormTag::create(Helper::$template, $params, $content);
+	return FormTag::create(Helper::template(), $params, $content);
 }
 
 function input($id, $value = '', array $params = array())
 {
-	return InputTag::create(Helper::$template, array_merge(array(
+	return InputTag::create(Helper::template(), array_merge(array(
 		'type'	=> 'text',
 		'id'	=> $id,
 		'value'	=> $value
@@ -152,7 +184,7 @@ function input($id, $value = '', array $params = array())
 
 function calendar($id, $value = '', $wrapper = 'div', array $params = array())
 {
-	return CalendarTag::create(Helper::$template, array_merge(array(
+	return CalendarTag::create(Helper::template(), array_merge(array(
 		'id'		=> $id,
 		'value'		=> $value,
 		'wrapper'	=> $wrapper
