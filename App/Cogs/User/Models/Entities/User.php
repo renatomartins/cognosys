@@ -71,15 +71,6 @@ class User extends Model
 	 */
 	protected $role_exceptions;
 	
-	// if a model needs default values in constructor,
-	//   set them in a static create like this
-	/*static public function create(array $params)
-	{
-		$instance = parent::create($params);
-		// set defaults
-		$instance->register_date = new DateTime;
-		return $instance;
-	}*/
 	
 	static public function generatePassword($login, $password)
 	{

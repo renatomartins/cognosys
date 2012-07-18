@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="/css/bootstrap-responsive.css">
     <link rel="stylesheet" href="/css/datepicker.css">
     <link rel="stylesheet" href="/css/app.css">
+    <style><?=loadCssSnippets()?></style>
     <?=loadCssFiles()?>
 
     <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -34,17 +35,9 @@
             <span class="icon-bar"></span>
           </a>
           <a class="brand" href="#">Application</a>
-          <div class="btn-group pull-right">
-            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-              <i class="icon-user"></i> Username
-              <span class="caret"></span>
-            </a>
-            <ul class="dropdown-menu">
-              <li><a href="#">Profile</a></li>
-              <li class="divider"></li>
-              <li><a href="#">Sign Out</a></li>
-            </ul>
-          </div>
+
+          <?=widget('user', 'option-panel')?>
+
           <div class="nav-collapse">
             <ul class="nav">
               <li class="active"><a href="#">Dashboard</a></li>
@@ -59,26 +52,7 @@
     <div class="container-fluid">
       <div class="row-fluid">
         <div class="span3">
-          <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-              <li class="nav-header">Sidebar</li>
-              <li class="active"><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li class="nav-header">Sidebar</li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-              <li><a href="#">Link</a></li>
-            </ul>
-          </div><!--/.well -->
+          <?=widget('base', 'menu')?>
         </div><!--/span-->
         <div class="span9">
           <?=view()?>
