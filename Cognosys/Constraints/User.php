@@ -21,7 +21,7 @@ class User extends Constraint
 			throw new ConstraintArgumentException(get_class($this), 'login');
 		}
 		
-		$user = $controller->getUser();
+		$user = $controller->user();
 		return $user->login() === $this->login;
 	}
 }

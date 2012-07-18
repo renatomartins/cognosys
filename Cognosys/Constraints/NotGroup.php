@@ -30,7 +30,7 @@ class NotGroup extends Constraint
 			$this->inherit = true;
 		}
 		
-		$user = $controller->getUser();
+		$user = $controller->user();
 		return $user->hasGroup($this->name, $this->inherit) === false;
 	}
 }

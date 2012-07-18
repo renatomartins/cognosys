@@ -25,7 +25,7 @@ class Role extends Constraint
 			return true;
 		}
 		
-		$user = $controller->getUser();
+		$user = $controller->user();
 		return self::$authorized = $user->hasRole($this->name);
 	}
 }

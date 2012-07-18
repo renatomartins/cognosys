@@ -36,7 +36,7 @@ class Group extends Constraint
 		}
 		
 		// at this point, this is, without doubt, an instance of the entity User
-		$user = $controller->getUser();
+		$user = $controller->user();
 		return self::$authorized = $user->hasGroup($this->name, $this->inherit);
 	}
 }
