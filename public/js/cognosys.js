@@ -36,7 +36,7 @@ var cognosys = {
 			type = (type == null || type == undefined) ? 'text' : type
 			$.ajax({url:url,beforeSend:before,success:success,error:error,dataType:type})
 		},
-		loading: '<div class="center progress progress-warning progress-striped active" style="width:80px"><div class="bar" style="width:100%">loading...</div></div>'
+		loading: '<div class="center progress progress-warning progress-striped active" style="width:80px;margin-bottom:0"><div class="bar" style="width:100%">loading...</div></div>'
 	},
 	alert: function(messages, type) {
 		humane.create({timeout: -1, clickToClose: true})

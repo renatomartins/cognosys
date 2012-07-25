@@ -9,6 +9,7 @@ use Cognosys\AlertManager,
  * Depends on bootstrap-datepicker
  * @author Renato S. Martins <smartins.renato@gmail.com>
  */
+//TODO: separate this junk to template-dependent views
 class CalendarTag extends HelperTag
 {
 	protected $value;
